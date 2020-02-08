@@ -3,13 +3,13 @@ import * as THREE from 'three'
 import React, { useEffect, useRef } from 'react'
 
 export default () => {
-    const canvasEl = useRef<HTMLInputElement>(null)
+    const canvasEl = useRef<HTMLDivElement>(null)
 
     useEffect(() => {
         // === THREE.JS CODE START ===
         var scene = new THREE.Scene()
         var camera = new THREE.PerspectiveCamera(
-            75,
+            70,
             window.innerWidth / window.innerHeight,
             0.1,
             1000
@@ -33,6 +33,12 @@ export default () => {
             renderer.render(scene, camera)
         }
         animate()
+
+        return function cleanup() {
+            if (canvasEl && canvasEl.current) {
+                canvasEl.current.removeChild(renderer.domElement)
+            }
+        }
     })
 
     return <div ref={canvasEl} />
