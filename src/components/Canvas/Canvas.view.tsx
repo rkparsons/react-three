@@ -1,13 +1,11 @@
 import * as THREE from 'three'
 
-import React, { Component } from 'react'
+import React, { useEffect, useRef } from 'react'
 
-import ReactDOM from 'react-dom'
+export default () => {
+    const canvasEl = useRef<HTMLInputElement>(null)
 
-export default class Canvas extends Component {
-    mount!: HTMLDivElement | null
-
-    componentDidMount() {
+    useEffect(() => {
         // === THREE.JS CODE START ===
         var scene = new THREE.Scene()
         var camera = new THREE.PerspectiveCamera(
@@ -19,7 +17,10 @@ export default class Canvas extends Component {
         var renderer = new THREE.WebGLRenderer()
         renderer.setSize(window.innerWidth, window.innerHeight)
 
-        this.mount?.appendChild(renderer.domElement)
+        if (canvasEl && canvasEl.current) {
+            canvasEl.current.appendChild(renderer.domElement)
+        }
+
         var geometry = new THREE.BoxGeometry(1, 1, 1)
         var material = new THREE.MeshBasicMaterial({ color: 0x00ff00 })
         var cube = new THREE.Mesh(geometry, material)
@@ -32,8 +33,7 @@ export default class Canvas extends Component {
             renderer.render(scene, camera)
         }
         animate()
-    }
-    render() {
-        return <div ref={ref => (this.mount = ref)} />
-    }
+    })
+
+    return <div ref={canvasEl} />
 }
