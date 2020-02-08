@@ -13,6 +13,7 @@ import { useMousePosition } from '~/hooks/useMousePosition'
 export default () => {
     const canvasEl = useRef<HTMLDivElement>(null)
     const position = useMousePosition()
+    let frameId = 0
 
     useEffect(() => {
         // === THREE.JS CODE START ===
@@ -31,7 +32,7 @@ export default () => {
         scene.add(cube)
         camera.position.z = 5
         var animate = function() {
-            requestAnimationFrame(animate)
+            frameId = requestAnimationFrame(animate)
             camera.position.set(position.x / window.innerWidth, position.y / window.innerHeight, 5)
             cube.rotation.x += 0.01
             cube.rotation.y += 0.01
@@ -40,6 +41,8 @@ export default () => {
         animate()
 
         return function cleanup() {
+            cancelAnimationFrame(frameId)
+
             if (canvasEl && canvasEl.current) {
                 canvasEl.current.removeChild(renderer.domElement)
             }
