@@ -29,7 +29,7 @@ const Box = (props: BoxProps) => {
             onPointerOver={e => setIsHover(true)}
             onPointerOut={e => setIsHover(false)}
         >
-            <boxBufferGeometry attach="geometry" args={[1, 1, 1]} />
+            <boxBufferGeometry attach="geometry" args={[2, 2, 2]} />
             <meshStandardMaterial attach="material" color={isHover ? 'hotpink' : 'orange'} />
         </mesh>
     )
@@ -40,8 +40,8 @@ export default () => (
         <Canvas>
             <ambientLight />
             <pointLight position={[10, 10, 10]} />
-            <Box position={[-1.2, 0, 0]} />
-            <Box position={[1.2, 0, 0]} />
+            <Box position={[-3, 0, 0]} />
+            <Box position={[3, 0, 0]} />
         </Canvas>
     </SceneContainer>
 )
