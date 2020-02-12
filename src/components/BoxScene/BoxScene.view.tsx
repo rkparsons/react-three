@@ -2,6 +2,7 @@ import { Canvas, useFrame } from 'react-three-fiber'
 import React, { useRef, useState } from 'react'
 
 import { Mesh } from 'three'
+import { SceneContainer } from './BoxScene.style'
 
 type BoxProps = {
     position: number[]
@@ -35,10 +36,12 @@ const Box = (props: BoxProps) => {
 }
 
 export default () => (
-    <Canvas>
-        <ambientLight />
-        <pointLight position={[10, 10, 10]} />
-        <Box position={[-1.2, 0, 0]} />
-        <Box position={[1.2, 0, 0]} />
-    </Canvas>
+    <SceneContainer>
+        <Canvas>
+            <ambientLight />
+            <pointLight position={[10, 10, 10]} />
+            <Box position={[-1.2, 0, 0]} />
+            <Box position={[1.2, 0, 0]} />
+        </Canvas>
+    </SceneContainer>
 )
