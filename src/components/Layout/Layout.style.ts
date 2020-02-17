@@ -4,6 +4,7 @@ import styled from 'styled-components'
 export const GlobalStyle = createGlobalStyle``
 
 export const Container = styled.div`
+    background-color: lightgrey;
     margin: 0 auto;
     padding: 1rem;
     display: flex;
