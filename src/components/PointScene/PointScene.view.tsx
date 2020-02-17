@@ -1,10 +1,12 @@
 import { Canvas, useFrame } from 'react-three-fiber'
-import { CardContent, Grid, Slider, Typography } from '@material-ui/core'
-import React, { ChangeEvent, useCallback, useRef, useState } from 'react'
+import { Grid, Slider, Typography } from '@material-ui/core'
+import React, { useRef, useState } from 'react'
 
 import { Mesh } from 'three'
 
-function PointSphere({ radius }: { radius: number }) {
+type SphereProps = { radius: number; widthSegments: number; heightSegments: number }
+
+function PointSphere({ radius, widthSegments, heightSegments }: SphereProps) {
     const mesh = useRef<Mesh>()
 
     useFrame(() => {
@@ -15,7 +17,10 @@ function PointSphere({ radius }: { radius: number }) {
 
     return (
         <mesh ref={mesh}>
-            <sphereBufferGeometry attach="geometry" args={[radius, 8, 8]} />
+            <sphereBufferGeometry
+                attach="geometry"
+                args={[radius, widthSegments, heightSegments]}
+            />
             <pointsMaterial attach="material" color="red" />
         </mesh>
     )
@@ -23,29 +28,57 @@ function PointSphere({ radius }: { radius: number }) {
 
 export default () => {
     const [radius, setRadius] = useState<number>(16)
-
-    const handleRadiusChange = (event: any, newValue: number | number[]) => {
-        setRadius(newValue as number)
-    }
+    const [widthSegments, setWidthSegments] = useState<number>(8)
+    const [heightSegments, setHeightSegments] = useState<number>(8)
 
     return (
         <>
-            <Grid container>
+            <Grid container spacing={1}>
                 <Grid item xs={4}>
-                    <Typography id="discrete-slider" gutterBottom>
-                        Radius
-                    </Typography>
+                    <Typography>Radius</Typography>
                     <Slider
                         value={radius}
-                        onChange={handleRadiusChange}
-                        aria-labelledby="discrete-slider"
+                        min={6}
+                        max={24}
+                        valueLabelDisplay="auto"
+                        onChange={(event: any, newValue: number | number[]) => {
+                            setRadius(newValue as number)
+                        }}
+                    />
+                </Grid>
+                <Grid item xs={4}>
+                    <Typography>Width Segments</Typography>
+                    <Slider
+                        value={widthSegments}
+                        min={6}
+                        max={24}
+                        valueLabelDisplay="auto"
+                        onChange={(event: any, newValue: number | number[]) => {
+                            setWidthSegments(newValue as number)
+                        }}
+                    />
+                </Grid>
+                <Grid item xs={4}>
+                    <Typography>Height Segments</Typography>
+                    <Slider
+                        value={heightSegments}
+                        min={6}
+                        max={24}
+                        valueLabelDisplay="auto"
+                        onChange={(event: any, newValue: number | number[]) => {
+                            setHeightSegments(newValue as number)
+                        }}
                     />
                 </Grid>
             </Grid>
             <Canvas camera={{ position: [0, 0, 35] }}>
                 <ambientLight intensity={2} />
                 <pointLight position={[40, 40, 40]} />
-                <PointSphere radius={radius} />
+                <PointSphere
+                    radius={radius}
+                    widthSegments={widthSegments}
+                    heightSegments={heightSegments}
+                />
             </Canvas>
         </>
     )
