@@ -16,13 +16,13 @@ function PointSphere({ radius, widthSegments, heightSegments }: SphereProps) {
     })
 
     return (
-        <mesh ref={mesh}>
+        <points ref={mesh}>
             <sphereBufferGeometry
                 attach="geometry"
                 args={[radius, widthSegments, heightSegments]}
             />
             <pointsMaterial attach="material" color="red" />
-        </mesh>
+        </points>
     )
 }
 
