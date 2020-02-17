@@ -2,8 +2,6 @@ import { Canvas, useFrame, useLoader, useUpdate } from 'react-three-fiber'
 import { FontLoader, Group, Mesh, TextBufferGeometry, Vector3 } from 'three'
 import React, { Suspense, useMemo, useRef } from 'react'
 
-import { SceneContainer } from './TextScene.style'
-
 function Text({
     children = 'testing',
     vAlign = 'center',
@@ -70,14 +68,12 @@ function AnimatedTextGroup() {
 
 export default () => {
     return (
-        <SceneContainer>
-            <Canvas camera={{ position: [0, 0, 35] }}>
-                <ambientLight intensity={2} />
-                <pointLight position={[40, 40, 40]} />
-                <Suspense fallback={null}>
-                    <AnimatedTextGroup />
-                </Suspense>
-            </Canvas>
-        </SceneContainer>
+        <Canvas camera={{ position: [0, 0, 35] }}>
+            <ambientLight intensity={2} />
+            <pointLight position={[40, 40, 40]} />
+            <Suspense fallback={null}>
+                <AnimatedTextGroup />
+            </Suspense>
+        </Canvas>
     )
 }

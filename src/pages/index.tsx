@@ -5,6 +5,7 @@ import { Canvas } from 'react-three-fiber'
 import Head from '~/components/Head'
 import PointScene from '~/components/PointScene'
 import React from 'react'
+import Scene from '~/components/Scene'
 import TextScene from '~/components/TextScene'
 import { graphql } from 'gatsby'
 
@@ -16,21 +17,15 @@ export default () => (
             <li>scroll with depth perception effect</li>
         </ul>
         <Grid container spacing={2}>
-            <Grid item xs={12} md={6} lg={4}>
-                <Card>
-                    <BoxScene />
-                </Card>
-            </Grid>
-            <Grid item xs={12} md={6} lg={4}>
-                <Card>
-                    <TextScene />
-                </Card>
-            </Grid>
-            <Grid item xs={12} md={6} lg={4}>
-                <Card>
-                    <PointScene />
-                </Card>
-            </Grid>
+            <Scene>
+                <BoxScene />
+            </Scene>
+            <Scene>
+                <TextScene />
+            </Scene>
+            <Scene>
+                <PointScene />
+            </Scene>
         </Grid>
     </>
 )
