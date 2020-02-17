@@ -1,7 +1,10 @@
+import React, { Suspense } from 'react'
+
 import BoxScene from '~/components/BoxScene'
+import { Canvas } from 'react-three-fiber'
 import { Grid } from '@material-ui/core'
 import Head from '~/components/Head'
-import React from 'react'
+import TextScene from '~/components/TextScene'
 import { graphql } from 'gatsby'
 
 export default () => (
@@ -16,7 +19,7 @@ export default () => (
                 <BoxScene />
             </Grid>
             <Grid item xs={12} md={6}>
-                <BoxScene />
+                <TextScene />
             </Grid>
         </Grid>
     </>
