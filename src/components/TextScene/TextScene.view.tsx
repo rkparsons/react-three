@@ -1,5 +1,5 @@
 import { Canvas, useFrame, useLoader, useUpdate } from 'react-three-fiber'
-import { FontLoader, Group, Mesh, Vector3 } from 'three'
+import { FontLoader, Group, Mesh, TextBufferGeometry, Vector3 } from 'three'
 import React, { Suspense, useMemo, useRef } from 'react'
 
 import { SceneContainer } from './TextScene.style'
@@ -12,6 +12,7 @@ function Text({
     color = '#000000',
     ...props
 }) {
+    const mesh = useRef<Mesh>()
     const font = useLoader(
         FontLoader,
         'https://threejsfundamentals.org/threejs/resources/threejs/fonts/helvetiker_regular.typeface.json'
@@ -30,20 +31,20 @@ function Text({
         }),
         [font]
     )
-    const mesh = useUpdate<Mesh>(
+
+    const text = useUpdate<TextBufferGeometry>(
         self => {
-            const size = new Vector3()
-            self.geometry.computeBoundingBox()
-            self.geometry.boundingBox.getSize(size)
-            self.position.x = hAlign === 'center' ? -size.x / 2 : hAlign === 'right' ? 0 : -size.x
-            self.position.y = vAlign === 'center' ? -size.y / 2 : vAlign === 'top' ? 0 : -size.y
+            if (mesh.current) {
+                self.computeBoundingBox()
+                self.boundingBox.getCenter(mesh.current.position).multiplyScalar(-1)
+            }
         },
         [children]
     )
     return (
         <group {...props} scale={[0.1 * size, 0.1 * size, 0.1]}>
             <mesh ref={mesh}>
-                <textGeometry attach="geometry" args={[children, config]} />
+                <textBufferGeometry ref={text} attach="geometry" args={[children, config]} />
                 <meshNormalMaterial attach="material" />
             </mesh>
         </group>
@@ -54,13 +55,15 @@ function AnimatedTextGroup() {
     const ref = useRef<Group>()
     useFrame(({ clock }) => {
         if (ref && ref.current) {
-            ref.current.rotation.x = ref.current.rotation.y = ref.current.rotation.z =
-                Math.sin(clock.getElapsedTime()) * 0.3
+            const speed = 0.1
+            const rotation = clock.getElapsedTime() * speed
+            ref.current.rotation.x = ref.current.rotation.y = ref.current.rotation.z = rotation
         }
     })
     return (
         <group ref={ref}>
             <Text hAlign="left" position={[0, 4.2, 0]} children="REACT" />
+            <Text hAlign="left" position={[0, -8, 0]} children="THREE" />
         </group>
     )
 }
