@@ -1,6 +1,5 @@
-import * as THREE from 'three'
-
 import { Canvas, useFrame, useLoader, useUpdate } from 'react-three-fiber'
+import { FontLoader, Group, Mesh, Vector3 } from 'three'
 import React, { Suspense, useMemo, useRef } from 'react'
 
 import { SceneContainer } from './TextScene.style'
@@ -14,13 +13,13 @@ function Text({
     ...props
 }) {
     const font = useLoader(
-        THREE.FontLoader,
+        FontLoader,
         'https://threejsfundamentals.org/threejs/resources/threejs/fonts/helvetiker_regular.typeface.json'
     )
     const config = useMemo(
         () => ({
             font,
-            size: 40,
+            size: 100,
             height: 30,
             curveSegments: 32,
             bevelEnabled: true,
@@ -31,9 +30,9 @@ function Text({
         }),
         [font]
     )
-    const mesh = useUpdate<THREE.Mesh>(
+    const mesh = useUpdate<Mesh>(
         self => {
-            const size = new THREE.Vector3()
+            const size = new Vector3()
             self.geometry.computeBoundingBox()
             self.geometry.boundingBox.getSize(size)
             self.position.x = hAlign === 'center' ? -size.x / 2 : hAlign === 'right' ? 0 : -size.x
@@ -52,7 +51,7 @@ function Text({
 }
 
 function AnimatedTextGroup() {
-    const ref = useRef<THREE.Group>()
+    const ref = useRef<Group>()
     useFrame(({ clock }) => {
         if (ref && ref.current) {
             ref.current.rotation.x = ref.current.rotation.y = ref.current.rotation.z =
