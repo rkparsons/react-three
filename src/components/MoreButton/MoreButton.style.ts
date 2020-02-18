@@ -15,7 +15,7 @@ export const Button = styled(IconButton)``
 
 export const Icon = styled(ExpandMoreIcon)`
     ${({ theme }) => `
-        width: ${theme.spacing(16)};
-        height: ${theme.spacing(16)};
+        width: ${theme.spacing(24)};
+        height: ${theme.spacing(24)};
   `}
 `
