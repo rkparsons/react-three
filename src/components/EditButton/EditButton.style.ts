@@ -6,7 +6,9 @@ import styled from 'styled-components'
 export const GridContainer = styled(Grid)`
     ${({ theme }) => `
         position: absolute;
-        top: 0; left: 0; bottom: 0; right: 0;
+        width: ${theme.spacing(50)};
+        top: 0; 
+        bottom: 0;
         left: ${theme.spacing(75)};
         z-index: 1;
   `}
