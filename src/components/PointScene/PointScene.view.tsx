@@ -33,7 +33,7 @@ export default () => {
 
     return (
         <>
-            <Grid container spacing={1}>
+            {/* <Grid container spacing={1}>
                 <Grid item xs={4}>
                     <Typography>Radius</Typography>
                     <Slider
@@ -70,7 +70,7 @@ export default () => {
                         }}
                     />
                 </Grid>
-            </Grid>
+            </Grid> */}
             <Canvas camera={{ position: [0, 0, 35] }}>
                 <ambientLight intensity={2} />
                 <pointLight position={[40, 40, 40]} />
