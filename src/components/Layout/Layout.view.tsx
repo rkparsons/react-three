@@ -19,11 +19,7 @@ export default ({ isDarkMode, setIsDarkMode, children }: Props) => {
             <CssBaseline />
             <GlobalStyle />
             <Container>
-                <Content>
-                    <Navigation />
-                    <hr />
-                    {children}
-                </Content>
+                <Content>{children}</Content>
                 <Footer />
             </Container>
         </ThemeProvider>

@@ -4,9 +4,9 @@ import styled from 'styled-components'
 export const GlobalStyle = createGlobalStyle``
 
 export const Container = styled.div`
-    background-color: lightgrey;
+    background: linear-gradient(to right, #0b0b0b 0%, #0b0b0b 50%, #1f1f1f 50%, #1f1f1f 100%);
     margin: 0 auto;
-    padding: 1rem;
+    padding: 0;
     display: flex;
     flex-direction: column;
     min-height: 100vh;

@@ -10,36 +10,16 @@ import TextScene from '~/components/TextScene'
 import { graphql } from 'gatsby'
 
 export default () => {
-    const [activeIndex, setActiveIndex] = useState<number | null>(null)
-
-    const setIsFullScreen = (index: number) => {
-        if (activeIndex === null) {
-            setActiveIndex(index)
-        } else if (activeIndex === index) {
-            setActiveIndex(null)
-        }
-    }
-
-    const sceneComponents = [BoxScene, TextScene, PointScene].map((SceneComponent, index) => (
-        <Scene
-            key={index}
-            isFullScreen={activeIndex === index}
-            isVisible={activeIndex === null || activeIndex === index}
-            setIsFullScreen={() => setIsFullScreen(index)}
-        >
-            <SceneComponent />
+    const scenes = [BoxScene, TextScene, PointScene].map((Component, index) => (
+        <Scene key={index}>
+            <Component />
         </Scene>
     ))
-
     return (
         <>
             <Head title="Home" />
-            <ul>
-                <li>3d character surrounded by radial menu</li>
-                <li>scroll with depth perception effect</li>
-            </ul>
-            <Grid container spacing={2}>
-                {sceneComponents}
+            <Grid container alignItems="center" justify="center" style={{ minHeight: '100vh' }}>
+                <Grid item>{scenes}</Grid>
             </Grid>
         </>
     )
