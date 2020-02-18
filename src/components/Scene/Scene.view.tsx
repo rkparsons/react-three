@@ -1,9 +1,9 @@
-import { Card, CardActions, CardContent } from './Scene.style'
-import { Grid, IconButton } from '@material-ui/core'
+import { Card, CardActions, CardContent, Grid } from './Scene.style'
 import React, { ReactNode, useState } from 'react'
 
 import FullscreenExitIcon from '@material-ui/icons/FullscreenExit'
 import FullscreenIcon from '@material-ui/icons/Fullscreen'
+import { IconButton } from '@material-ui/core'
 
 type ViewProps = {
     isFullScreen: boolean
@@ -17,9 +17,9 @@ export default ({ isFullScreen, isVisible, setIsFullScreen, children }: ViewProp
         return <></>
     }
     return (
-        <Grid item xs={12} md={isFullScreen ? 12 : 6} lg={isFullScreen ? 12 : 4}>
+        <Grid isFullScreen={isFullScreen}>
             <Card>
-                <CardContent>{children}</CardContent>
+                <CardContent isFullScreen={isFullScreen}>{children}</CardContent>
                 <CardActions disableSpacing>
                     <IconButton
                         onClick={() => {

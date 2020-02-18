@@ -22,6 +22,7 @@ export default () => {
 
     const sceneComponents = [BoxScene, TextScene, PointScene].map((SceneComponent, index) => (
         <Scene
+            key={index}
             isFullScreen={activeIndex === index}
             isVisible={activeIndex === null || activeIndex === index}
             setIsFullScreen={() => setIsFullScreen(index)}
