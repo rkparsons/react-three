@@ -7,6 +7,7 @@ export const GridContainer = styled(Grid)`
     ${({ theme }) => `
         position: fixed;
         bottom: ${theme.spacing(1)};
+        z-index: 1000;
   `}
 `
 
