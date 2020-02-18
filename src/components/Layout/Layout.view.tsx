@@ -15,7 +15,7 @@ type Props = {
 }
 
 export default ({ isDarkMode, setIsDarkMode, children }: Props) => {
-    const activeTheme = theme(isDarkMode)
+    const activeTheme = theme(true)
 
     return (
         <MuiThemeProvider theme={activeTheme}>
