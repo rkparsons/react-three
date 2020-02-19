@@ -3,6 +3,7 @@ import { Grid, Slider, Typography } from '@material-ui/core'
 import React, { useRef, useState } from 'react'
 
 import { Mesh } from 'three'
+import VisibilitySensor from 'react-visibility-sensor'
 
 type SphereProps = { radius: number; widthSegments: number; heightSegments: number }
 
@@ -11,6 +12,7 @@ function PointSphere({ radius, widthSegments, heightSegments }: SphereProps) {
 
     useFrame(() => {
         if (mesh.current) {
+            console.log('animating points')
             mesh.current.rotation.x = mesh.current.rotation.y += 0.01
         }
     })
@@ -71,15 +73,20 @@ export default () => {
                     />
                 </Grid>
             </Grid> */}
-            <Canvas camera={{ position: [0, 0, 35] }}>
-                <ambientLight intensity={2} />
-                <pointLight position={[40, 40, 40]} />
-                <PointSphere
-                    radius={radius}
-                    widthSegments={widthSegments}
-                    heightSegments={heightSegments}
-                />
-            </Canvas>
+
+            <VisibilitySensor partialVisibility={true}>
+                {({ isVisible }) => (
+                    <Canvas invalidateFrameloop={!isVisible} camera={{ position: [0, 0, 35] }}>
+                        <ambientLight intensity={2} />
+                        <pointLight position={[40, 40, 40]} />
+                        <PointSphere
+                            radius={radius}
+                            widthSegments={widthSegments}
+                            heightSegments={heightSegments}
+                        />
+                    </Canvas>
+                )}
+            </VisibilitySensor>
         </>
     )
 }

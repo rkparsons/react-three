@@ -2,6 +2,7 @@ import { Canvas, useFrame } from 'react-three-fiber'
 import React, { useRef, useState } from 'react'
 
 import { Mesh } from 'three'
+import VisibilitySensor from 'react-visibility-sensor'
 
 type BoxProps = {
     position: number[]
@@ -15,6 +16,7 @@ const Box = (props: BoxProps) => {
 
     useFrame(() => {
         if (mesh && mesh.current) {
+            console.log('animating box')
             mesh.current.rotation.x = mesh.current.rotation.y += 0.01
         }
     })
@@ -35,9 +37,13 @@ const Box = (props: BoxProps) => {
 }
 
 export default () => (
-    <Canvas>
-        <ambientLight />
-        <pointLight position={[10, 10, 10]} />
-        <Box position={[0, 0, 0]} />
-    </Canvas>
+    <VisibilitySensor partialVisibility={true}>
+        {({ isVisible }) => (
+            <Canvas invalidateFrameloop={!isVisible}>
+                <ambientLight />
+                <pointLight position={[10, 10, 10]} />
+                <Box position={[0, 0, 0]} />
+            </Canvas>
+        )}
+    </VisibilitySensor>
 )

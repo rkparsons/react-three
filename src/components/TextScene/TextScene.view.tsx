@@ -2,6 +2,8 @@ import { Canvas, useFrame, useLoader, useUpdate } from 'react-three-fiber'
 import { FontLoader, Group, Mesh, TextBufferGeometry, Vector3 } from 'three'
 import React, { Suspense, useMemo, useRef } from 'react'
 
+import VisibilitySensor from 'react-visibility-sensor'
+
 function Text({
     children = 'testing',
     vAlign = 'center',
@@ -53,6 +55,7 @@ function AnimatedTextGroup() {
     const ref = useRef<Group>()
     useFrame(({ clock }) => {
         if (ref && ref.current) {
+            console.log('animating text')
             const speed = 0.1
             const rotation = clock.getElapsedTime() * speed
             ref.current.rotation.x = ref.current.rotation.y = ref.current.rotation.z = rotation
@@ -68,12 +71,16 @@ function AnimatedTextGroup() {
 
 export default () => {
     return (
-        <Canvas camera={{ position: [0, 0, 35] }}>
-            <ambientLight intensity={2} />
-            <pointLight position={[40, 40, 40]} />
-            <Suspense fallback={null}>
-                <AnimatedTextGroup />
-            </Suspense>
-        </Canvas>
+        <VisibilitySensor partialVisibility={true}>
+            {({ isVisible }) => (
+                <Canvas invalidateFrameloop={!isVisible} camera={{ position: [0, 0, 35] }}>
+                    <ambientLight intensity={2} />
+                    <pointLight position={[40, 40, 40]} />
+                    <Suspense fallback={null}>
+                        <AnimatedTextGroup />
+                    </Suspense>
+                </Canvas>
+            )}
+        </VisibilitySensor>
     )
 }

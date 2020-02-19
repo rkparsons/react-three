@@ -41,6 +41,7 @@
         "react-helmet": "^5.2.1",
         "react-scroll": "^1.7.16",
         "react-three-fiber": "^4.0.14",
+        "react-visibility-sensor": "^5.1.1",
         "styled-components": "^4.4.1",
         "three": "^0.113.2"
     },
