@@ -18,7 +18,7 @@ export const GlobalStyle = createGlobalStyle`
 `
 
 export const Container = styled.div`
-    background: linear-gradient(to right, #0b0b0b 0%, #0b0b0b 50%, #1f1f1f 50%, #1f1f1f 100%);
+    background: linear-gradient(to top right, #0b0b0b 0%, #0b0b0b 50%, #1b1b1b 50%, #1b1b1b 100%);
     margin: 0 auto;
     padding: 0;
     display: flex;
