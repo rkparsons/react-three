@@ -1,4 +1,5 @@
-import { GridContainer, GridItem } from './SceneGrid.style'
+import { ButtonContainer, GridContainer, GridItem } from './SceneGrid.style'
+import { Grid, IconButton } from '@material-ui/core'
 import React, { UIEvent, useState } from 'react'
 
 import BoxScene from '~/components/BoxScene'
@@ -24,12 +25,12 @@ export default () => {
 
         setTime(currentTime)
         setPosition(currentPosition)
-        setSpeed(Math.max(-2, Math.min(2, speed)))
+        setSpeed(speed)
     }
 
     return (
         <GridContainer onScroll={handleScroll} container alignItems="center" justify="center">
-            <UpButton />
+            <UpButton emphasis={speed > 0 ? 0 : Math.abs(2 * speed)} />
             <GridItem item>
                 <Scene>
                     <BoxScene />
@@ -45,7 +46,7 @@ export default () => {
                     <PointScene />
                 </Scene>
             </GridItem>
-            <DownButton size={Math.max(1, speed)} />
+            <DownButton emphasis={speed < 0 ? 0 : 2 * speed} />
         </GridContainer>
     )
 }

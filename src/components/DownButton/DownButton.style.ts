@@ -1,4 +1,4 @@
-import { Grid, IconButton, Theme } from '@material-ui/core'
+import { Grid, Theme } from '@material-ui/core'
 
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 import styled from 'styled-components'
@@ -11,18 +11,16 @@ export const GridContainer = styled(Grid)`
   `}
 `
 
-export const Button = styled(IconButton)``
-
 type IconProps = {
     theme: Theme
-    size: number
+    emphasis: number
 }
 
 export const Icon = styled(ExpandMoreIcon)`
-    ${({ theme, size }: IconProps) => `
+    ${({ theme, emphasis }: IconProps) => `
         opacity: 0.5;
-        width: ${theme.spacing(24 * size)};
-        height: ${theme.spacing(24 * size)};
-        transition: all 0.2s linear
+        width: ${theme.spacing(24 + emphasis)};
+        height: ${theme.spacing(24 + emphasis)};
+        transition: all 0.15s linear
   `}
 `

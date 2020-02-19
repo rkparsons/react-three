@@ -1,19 +1,19 @@
-import { Button, GridContainer, Icon } from './DownButton.style'
+import { Grid, IconButton } from '@material-ui/core'
+import { GridContainer, Icon } from './DownButton.style'
 
-import { Grid } from '@material-ui/core'
 import React from 'react'
 
 type ViewProps = {
-    size: number
+    emphasis: number
 }
 
-export default ({ size }: ViewProps) => {
+export default ({ emphasis }: ViewProps) => {
     return (
         <GridContainer container justify="center">
             <Grid item>
-                <Button>
-                    <Icon size={size} />
-                </Button>
+                <IconButton>
+                    <Icon emphasis={emphasis} />
+                </IconButton>
             </Grid>
         </GridContainer>
     )
