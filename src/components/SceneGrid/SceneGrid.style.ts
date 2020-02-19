@@ -3,7 +3,8 @@ import { IconButton } from '@material-ui/core'
 import styled from 'styled-components'
 
 export const GridContainer = styled(Grid)`
-    overflow: scroll;
+    overflow-x: hidden;
+    overflow-y: scroll;
     height: 100vh;
 `
 

@@ -12,26 +12,24 @@ import { useWindowSize } from '~/hooks/useWindowSize'
 export default () => {
     const windowSize = useWindowSize()
     const [position, setPosition] = useState(0)
-    const [time, setTime] = useState(0)
-    const [speed, setSpeed] = useState(0)
+    // const [time, setTime] = useState(0)
+    // const [speed, setSpeed] = useState(0)
 
     const handleScroll = (event: UIEvent<HTMLElement>): void => {
         event.stopPropagation()
-        const currentTime = event.timeStamp
+        // const currentTime = event.timeStamp
         const currentPosition = event.currentTarget.scrollTop
-
-        const ellapsedTime = currentTime - time
-        const distancedTravelled = currentPosition - position
-        const speed = ellapsedTime === 0 ? 0 : distancedTravelled / ellapsedTime
-
-        setTime(currentTime)
+        // const ellapsedTime = currentTime - time
+        // const distancedTravelled = currentPosition - position
+        // const speed = ellapsedTime === 0 ? 0 : distancedTravelled / ellapsedTime
+        // setTime(currentTime)
         setPosition(currentPosition)
-        setSpeed(speed)
+        // setSpeed(speed)
     }
 
     return (
         <GridContainer onScroll={handleScroll} container alignItems="center" justify="center">
-            <ScrollButton speed={speed} direction={Direction.Up} />
+            {/* <ScrollButton speed={speed} direction={Direction.Up} /> */}
             <GridItem item>
                 <Scene windowHeight={windowSize.height}>
                     <BoxScene />
@@ -47,7 +45,7 @@ export default () => {
                     <PointScene />
                 </Scene>
             </GridItem>
-            <ScrollButton speed={speed} direction={Direction.Down} />
+            {/* <ScrollButton speed={speed} direction={Direction.Down} /> */}
         </GridContainer>
     )
 }

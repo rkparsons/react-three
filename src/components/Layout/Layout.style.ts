@@ -6,19 +6,10 @@ export const GlobalStyle = createGlobalStyle`
         height: 100vh;
         overflow: hidden;
     }
-    div {
-        ::-webkit-scrollbar { 
-            display: none;  /* Chrome Safari */
-        }
-        scrollbar-width: none; /* Firefox */
-        -ms-overflow-style: none;  /* IE 10+ */
-        overflow-y:scroll;
-        overflow-x:hidden;
-    }
 `
 
 export const Container = styled.div`
-    background: linear-gradient(to top right, #0b0b0b 0%, #0b0b0b 50%, #1b1b1b 50%, #1b1b1b 100%);
+    background: #0f0f0f;
     margin: 0 auto;
     padding: 0;
     display: flex;
