@@ -36,4 +36,3 @@ export default ({ windowHeight, children }: ViewProps) => {
         </div>
     )
 }
-// scale 0.5-1 to 0-1
