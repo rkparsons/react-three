@@ -4,15 +4,15 @@ import { Grid } from '@material-ui/core'
 import React from 'react'
 
 type ViewProps = {
-    isScrolling: boolean
+    size: number
 }
 
-export default ({ isScrolling }: ViewProps) => {
+export default ({ size }: ViewProps) => {
     return (
         <GridContainer container justify="center">
             <Grid item>
                 <Button>
-                    <Icon isScrolling={isScrolling} />
+                    <Icon size={size} />
                 </Button>
             </Grid>
         </GridContainer>

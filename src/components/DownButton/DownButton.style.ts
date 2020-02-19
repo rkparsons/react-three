@@ -15,14 +15,14 @@ export const Button = styled(IconButton)``
 
 type IconProps = {
     theme: Theme
-    isScrolling: boolean
+    size: number
 }
 
 export const Icon = styled(ExpandMoreIcon)`
-    ${({ theme, isScrolling }: IconProps) => `
+    ${({ theme, size }: IconProps) => `
         opacity: 0.5;
-        width: ${isScrolling ? theme.spacing(30) : theme.spacing(24)};
-        height: ${isScrolling ? theme.spacing(30) : theme.spacing(24)};
-        transition: all 0.1s ease-in-out
+        width: ${theme.spacing(24 * size)};
+        height: ${theme.spacing(24 * size)};
+        transition: all 0.2s linear
   `}
 `
