@@ -32,17 +32,17 @@ export default () => {
             {/* <ScrollButton speed={speed} direction={Direction.Up} /> */}
             <GridItem item>
                 <Scene windowHeight={windowSize.height}>
-                    <BoxScene />
+                    {isVisible => <BoxScene isVisible={isVisible} />}
                 </Scene>
             </GridItem>
             <GridItem item>
                 <Scene windowHeight={windowSize.height}>
-                    <TextScene />
+                    {isVisible => <TextScene isVisible={isVisible} />}
                 </Scene>
             </GridItem>
             <GridItem item>
                 <Scene windowHeight={windowSize.height}>
-                    <PointScene />
+                    {isVisible => <PointScene isVisible={isVisible} />}
                 </Scene>
             </GridItem>
             {/* <ScrollButton speed={speed} direction={Direction.Down} /> */}

@@ -2,10 +2,11 @@ import React, { ReactNode, useEffect, useRef, useState } from 'react'
 
 import { Box } from './Scene.style'
 import EditButton from '~/components/EditButton'
+import VisibilitySensor from 'react-visibility-sensor'
 
 type ViewProps = {
     windowHeight: number | undefined
-    children: ReactNode
+    children(isVisible: boolean): void
 }
 
 export default ({ windowHeight, children }: ViewProps) => {
@@ -24,15 +25,21 @@ export default ({ windowHeight, children }: ViewProps) => {
     }, [scene.current?.getBoundingClientRect()])
 
     return (
-        <div ref={scene}>
-            <Box>
-                {children}
-                <EditButton
-                    opacity={
-                        fractionInFocus < 0.7 ? 0 : convertRange(fractionInFocus, [0.7, 1], [0, 1])
-                    }
-                />
-            </Box>
-        </div>
+        <VisibilitySensor partialVisibility={true}>
+            {({ isVisible }) => (
+                <div ref={scene}>
+                    <Box>
+                        {children(isVisible)}
+                        <EditButton
+                            opacity={
+                                fractionInFocus < 0.7
+                                    ? 0
+                                    : convertRange(fractionInFocus, [0.7, 1], [0, 1])
+                            }
+                        />
+                    </Box>
+                </div>
+            )}
+        </VisibilitySensor>
     )
 }

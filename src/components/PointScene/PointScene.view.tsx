@@ -3,7 +3,6 @@ import { Grid, Slider, Typography } from '@material-ui/core'
 import React, { useRef, useState } from 'react'
 
 import { Mesh } from 'three'
-import VisibilitySensor from 'react-visibility-sensor'
 
 type SphereProps = { radius: number; widthSegments: number; heightSegments: number }
 
@@ -27,7 +26,11 @@ function PointSphere({ radius, widthSegments, heightSegments }: SphereProps) {
     )
 }
 
-export default () => {
+type PointSceneProps = {
+    isVisible: boolean
+}
+
+export default ({ isVisible }: PointSceneProps) => {
     const [radius, setRadius] = useState<number>(16)
     const [widthSegments, setWidthSegments] = useState<number>(8)
     const [heightSegments, setHeightSegments] = useState<number>(8)
@@ -73,19 +76,15 @@ export default () => {
                 </Grid>
             </Grid> */}
 
-            <VisibilitySensor partialVisibility={true}>
-                {({ isVisible }) => (
-                    <Canvas invalidateFrameloop={!isVisible} camera={{ position: [0, 0, 35] }}>
-                        <ambientLight intensity={2} />
-                        <pointLight position={[40, 40, 40]} />
-                        <PointSphere
-                            radius={radius}
-                            widthSegments={widthSegments}
-                            heightSegments={heightSegments}
-                        />
-                    </Canvas>
-                )}
-            </VisibilitySensor>
+            <Canvas invalidateFrameloop={!isVisible} camera={{ position: [0, 0, 35] }}>
+                <ambientLight intensity={2} />
+                <pointLight position={[40, 40, 40]} />
+                <PointSphere
+                    radius={radius}
+                    widthSegments={widthSegments}
+                    heightSegments={heightSegments}
+                />
+            </Canvas>
         </>
     )
 }

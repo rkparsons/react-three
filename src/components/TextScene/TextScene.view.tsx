@@ -2,8 +2,6 @@ import { Canvas, useFrame, useLoader, useUpdate } from 'react-three-fiber'
 import { FontLoader, Group, Mesh, TextBufferGeometry, Vector3 } from 'three'
 import React, { Suspense, useMemo, useRef } from 'react'
 
-import VisibilitySensor from 'react-visibility-sensor'
-
 function Text({
     children = 'testing',
     vAlign = 'center',
@@ -68,18 +66,18 @@ function AnimatedTextGroup() {
     )
 }
 
-export default () => {
+type TextSceneProps = {
+    isVisible: boolean
+}
+
+export default ({ isVisible }: TextSceneProps) => {
     return (
-        <VisibilitySensor partialVisibility={true}>
-            {({ isVisible }) => (
-                <Canvas invalidateFrameloop={!isVisible} camera={{ position: [0, 0, 35] }}>
-                    <ambientLight intensity={2} />
-                    <pointLight position={[40, 40, 40]} />
-                    <Suspense fallback={null}>
-                        <AnimatedTextGroup />
-                    </Suspense>
-                </Canvas>
-            )}
-        </VisibilitySensor>
+        <Canvas invalidateFrameloop={!isVisible} camera={{ position: [0, 0, 35] }}>
+            <ambientLight intensity={2} />
+            <pointLight position={[40, 40, 40]} />
+            <Suspense fallback={null}>
+                <AnimatedTextGroup />
+            </Suspense>
+        </Canvas>
     )
 }
