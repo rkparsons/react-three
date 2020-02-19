@@ -15,6 +15,14 @@ export default () => {
     // const [time, setTime] = useState(0)
     // const [speed, setSpeed] = useState(0)
 
+    const scenes = [BoxScene, TextScene, PointScene].map(Component => (
+        <GridItem item>
+            <Scene windowHeight={windowSize.height}>
+                {isVisible => <Component isVisible={isVisible} />}
+            </Scene>
+        </GridItem>
+    ))
+
     const handleScroll = (event: UIEvent<HTMLElement>): void => {
         event.stopPropagation()
         // const currentTime = event.timeStamp
@@ -30,21 +38,7 @@ export default () => {
     return (
         <GridContainer onScroll={handleScroll} container alignItems="center" justify="center">
             {/* <ScrollButton speed={speed} direction={Direction.Up} /> */}
-            <GridItem item>
-                <Scene windowHeight={windowSize.height}>
-                    {isVisible => <BoxScene isVisible={isVisible} />}
-                </Scene>
-            </GridItem>
-            <GridItem item>
-                <Scene windowHeight={windowSize.height}>
-                    {isVisible => <TextScene isVisible={isVisible} />}
-                </Scene>
-            </GridItem>
-            <GridItem item>
-                <Scene windowHeight={windowSize.height}>
-                    {isVisible => <PointScene isVisible={isVisible} />}
-                </Scene>
-            </GridItem>
+            {scenes}
             {/* <ScrollButton speed={speed} direction={Direction.Down} /> */}
         </GridContainer>
     )
