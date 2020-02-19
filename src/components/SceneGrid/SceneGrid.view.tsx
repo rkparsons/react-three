@@ -12,50 +12,44 @@ import useWindowDimensions from '~/hooks/useWindowDimensions'
 
 export default () => {
     const [position, setPosition] = useState(0)
+    const [time, setTime] = useState(0)
+    const [speed, setSpeed] = useState(0)
     const { height } = useWindowDimensions()
-    const boxScene = useRef<HTMLDivElement>(null)
-    const textScene = useRef<HTMLDivElement>(null)
-    const pointScene = useRef<HTMLDivElement>(null)
-    const scenes = [boxScene, textScene, pointScene]
-
-    useEffect(() => {
-        console.log(scenes.map(scene => scene.current!.scrollTop))
-    })
 
     const handleScroll = (e: React.UIEvent<HTMLElement>): void => {
-        e.stopPropagation() // Handy if you want to prevent event bubbling to scrollable parent
-        scenes.forEach(scene => {})
+        e.stopPropagation()
+        const currentTime = e.timeStamp
         const currentPosition = e.currentTarget.scrollTop
-        // const closest = scenes
-        //     .map(scene => scene.current!.getBoundingClientRect().y)
-        //     .reduce(function(prev, curr) {
-        //         return Math.abs(curr - currentPosition) < Math.abs(prev - currentPosition)
-        //             ? curr
-        //             : prev
-        //     })
+
+        const ellapsedTime = currentTime - time
+        const distancedTravelled = currentPosition - position
+        const speed = Math.abs(distancedTravelled) < 10 ? 0 : distancedTravelled / ellapsedTime
+
+        setTime(currentTime)
         setPosition(currentPosition)
+        setSpeed(speed)
     }
 
     return (
         <GridContainer onScroll={handleScroll} container alignItems="center" justify="center">
-            <Typography style={{ position: 'absolute', left: 0 }}>{position % height}</Typography>
+            <Typography style={{ position: 'absolute', left: 0 }}>{speed.toFixed(2)}</Typography>
             <UpButton />
-            <GridItem item ref={boxScene}>
+            <GridItem item>
                 <Scene>
                     <BoxScene />
                 </Scene>
             </GridItem>
-            <GridItem item ref={textScene}>
+            <GridItem item>
                 <Scene>
                     <TextScene />
                 </Scene>
             </GridItem>
-            <GridItem item ref={pointScene}>
+            <GridItem item>
                 <Scene>
                     <PointScene />
                 </Scene>
             </GridItem>
-            <DownButton isScrolling={position % height > 0} />
+            <DownButton isScrolling={speed > 0} />
         </GridContainer>
     )
 }
