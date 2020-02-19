@@ -12,7 +12,6 @@ function PointSphere({ radius, widthSegments, heightSegments }: SphereProps) {
 
     useFrame(() => {
         if (mesh.current) {
-            console.log('animating points')
             mesh.current.rotation.x = mesh.current.rotation.y += 0.01
         }
     })

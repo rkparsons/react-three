@@ -16,7 +16,6 @@ const Box = (props: BoxProps) => {
 
     useFrame(() => {
         if (mesh && mesh.current) {
-            console.log('animating box')
             mesh.current.rotation.x = mesh.current.rotation.y += 0.01
         }
     })

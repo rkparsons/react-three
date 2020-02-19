@@ -55,7 +55,6 @@ function AnimatedTextGroup() {
     const ref = useRef<Group>()
     useFrame(({ clock }) => {
         if (ref && ref.current) {
-            console.log('animating text')
             const speed = 0.1
             const rotation = clock.getElapsedTime() * speed
             ref.current.rotation.x = ref.current.rotation.y = ref.current.rotation.z = rotation
