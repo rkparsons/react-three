@@ -1,5 +1,5 @@
 import { GridContainer, GridItem } from './SceneGrid.style'
-import React, { UIEvent, useState } from 'react'
+import React, { UIEvent, useRef, useState } from 'react'
 
 import BoxScene from '~/components/BoxScene'
 import Direction from '~/constants/direction'
@@ -7,8 +7,10 @@ import PointScene from '~/components/PointScene'
 import Scene from '~/components/Scene'
 import ScrollButton from '~/components/ScrollButton'
 import TextScene from '~/components/TextScene'
+import { useWindowSize } from '~/hooks/useWindowSize'
 
 export default () => {
+    const windowSize = useWindowSize()
     const [position, setPosition] = useState(0)
     const [time, setTime] = useState(0)
     const [speed, setSpeed] = useState(0)
@@ -31,17 +33,17 @@ export default () => {
         <GridContainer onScroll={handleScroll} container alignItems="center" justify="center">
             <ScrollButton speed={speed} direction={Direction.Up} />
             <GridItem item>
-                <Scene>
+                <Scene windowHeight={windowSize.height}>
                     <BoxScene />
                 </Scene>
             </GridItem>
             <GridItem item>
-                <Scene>
+                <Scene windowHeight={windowSize.height}>
                     <TextScene />
                 </Scene>
             </GridItem>
             <GridItem item>
-                <Scene>
+                <Scene windowHeight={windowSize.height}>
                     <PointScene />
                 </Scene>
             </GridItem>
