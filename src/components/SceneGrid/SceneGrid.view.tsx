@@ -15,8 +15,8 @@ export default () => {
     // const [time, setTime] = useState(0)
     // const [speed, setSpeed] = useState(0)
 
-    const scenes = [BoxScene, TextScene, PointScene].map(Component => (
-        <GridItem item>
+    const scenes = [BoxScene, TextScene, PointScene].map((Component, index) => (
+        <GridItem item key={index}>
             <Scene windowHeight={windowSize.height}>
                 {isVisible => <Component isVisible={isVisible} />}
             </Scene>
