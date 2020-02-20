@@ -8,7 +8,7 @@ type ControlsProps = {
 }
 
 export const Grid = styled(GridBase)`
-    ${({ theme, opacity }: ControlsProps) => `    
+    ${({ theme, opacity }: ControlsProps) => ` 
         position: fixed;
         opacity: ${opacity};
         z-index: ${opacity === 0 ? 0 : 1000};
