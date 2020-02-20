@@ -1,12 +1,11 @@
+import { ButtonBox, SceneBox } from './Scene.style'
 import React, { ReactNode, useEffect, useRef, useState } from 'react'
 
-import { Box } from './Scene.style'
 import EditButton from '~/components/EditButton'
-import VisibilitySensor from 'react-visibility-sensor'
 
 type ViewProps = {
     windowHeight: number | undefined
-    children(isVisible: boolean): void
+    children: ReactNode
 }
 
 export default ({ windowHeight, children }: ViewProps) => {
@@ -17,6 +16,14 @@ export default ({ windowHeight, children }: ViewProps) => {
         return ((value - r1[0]) * (r2[1] - r2[0])) / (r1[1] - r1[0]) + r2[0]
     }
 
+    function isSceneVisible() {
+        return fractionInFocus > 0
+    }
+
+    function getButtonOpacity() {
+        return fractionInFocus > 0.7 ? convertRange(fractionInFocus, [0.7, 1], [0, 1]) : 0
+    }
+
     useEffect(() => {
         if (windowHeight && scene.current) {
             const yPosition = scene.current.getBoundingClientRect().y
@@ -25,21 +32,13 @@ export default ({ windowHeight, children }: ViewProps) => {
     }, [scene.current?.getBoundingClientRect()])
 
     return (
-        <VisibilitySensor partialVisibility={true}>
-            {({ isVisible }) => (
-                <div ref={scene}>
-                    <Box>
-                        {children(isVisible)}
-                        <EditButton
-                            opacity={
-                                fractionInFocus < 0.7
-                                    ? 0
-                                    : convertRange(fractionInFocus, [0.7, 1], [0, 1])
-                            }
-                        />
-                    </Box>
-                </div>
-            )}
-        </VisibilitySensor>
+        <div ref={scene}>
+            <SceneBox opacity={1}>
+                {isSceneVisible() && children}
+                <ButtonBox opacity={getButtonOpacity()}>
+                    <EditButton />
+                </ButtonBox>
+            </SceneBox>
+        </div>
     )
 }

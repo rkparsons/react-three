@@ -3,16 +3,12 @@ import { Button, GridContainer, Icon } from './EditButton.style'
 import { Grid } from '@material-ui/core'
 import React from 'react'
 
-type ViewProps = {
-    opacity: number
-}
-
-export default ({ opacity }: ViewProps) => {
+export default () => {
     return (
         <GridContainer container alignItems="center">
             <Grid item>
                 <Button>
-                    <Icon opacity={opacity} />
+                    <Icon />
                 </Button>
             </Grid>
         </GridContainer>

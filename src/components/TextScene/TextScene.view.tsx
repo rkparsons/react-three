@@ -66,13 +66,9 @@ function AnimatedTextGroup() {
     )
 }
 
-type TextSceneProps = {
-    isVisible: boolean
-}
-
-export default ({ isVisible }: TextSceneProps) => {
+export default () => {
     return (
-        <Canvas invalidateFrameloop={!isVisible} camera={{ position: [0, 0, 35] }}>
+        <Canvas camera={{ position: [0, 0, 35] }}>
             <ambientLight intensity={2} />
             <pointLight position={[40, 40, 40]} />
             <Suspense fallback={null}>

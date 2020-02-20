@@ -18,7 +18,7 @@ export default () => {
     const scenes = [BoxScene, TextScene, PointScene].map((Component, index) => (
         <GridItem item key={index}>
             <Scene windowHeight={windowSize.height}>
-                {isVisible => <Component isVisible={isVisible} />}
+                <Component />
             </Scene>
         </GridItem>
     ))

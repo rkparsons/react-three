@@ -17,13 +17,11 @@ export const GridContainer = styled(Grid)`
 export const Button = styled(IconButton)``
 
 type IconProps = {
-    opacity: number
     theme: Theme
 }
 
 export const Icon = styled(CodeIcon)`
-    ${({ opacity, theme }: IconProps) => `
-        opacity: ${opacity};
+    ${({ theme }: IconProps) => `
         width: ${theme.spacing(24)};
         height: ${theme.spacing(24)};
         transition: opacity 0.5s linear;

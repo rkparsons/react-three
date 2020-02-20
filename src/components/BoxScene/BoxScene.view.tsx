@@ -1,5 +1,5 @@
 import { Canvas, useFrame } from 'react-three-fiber'
-import React, { useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 
 import { Mesh } from 'three'
 
@@ -34,12 +34,8 @@ const Box = (props: BoxProps) => {
     )
 }
 
-type BoxSceneProps = {
-    isVisible: boolean
-}
-
-export default ({ isVisible }: BoxSceneProps) => (
-    <Canvas invalidateFrameloop={!isVisible}>
+export default () => (
+    <Canvas>
         <ambientLight />
         <pointLight position={[10, 10, 10]} />
         <Box position={[0, 0, 0]} />

@@ -26,11 +26,7 @@ function PointSphere({ radius, widthSegments, heightSegments }: SphereProps) {
     )
 }
 
-type PointSceneProps = {
-    isVisible: boolean
-}
-
-export default ({ isVisible }: PointSceneProps) => {
+export default () => {
     const [radius, setRadius] = useState<number>(16)
     const [widthSegments, setWidthSegments] = useState<number>(8)
     const [heightSegments, setHeightSegments] = useState<number>(8)
@@ -76,7 +72,7 @@ export default ({ isVisible }: PointSceneProps) => {
                 </Grid>
             </Grid> */}
 
-            <Canvas invalidateFrameloop={!isVisible} camera={{ position: [0, 0, 35] }}>
+            <Canvas camera={{ position: [0, 0, 35] }}>
                 <ambientLight intensity={2} />
                 <pointLight position={[40, 40, 40]} />
                 <PointSphere
