@@ -11,7 +11,7 @@ export const Grid = styled(GridBase)`
     ${({ theme, opacity }: ControlsProps) => `    
         position: fixed;
         opacity: ${opacity};
-        z-index: 1000;
+        z-index: ${opacity === 0 ? 0 : 1000};
         width: 100%;
         bottom: ${theme.spacing(20)};
   `}

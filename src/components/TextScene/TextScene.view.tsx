@@ -1,15 +1,15 @@
 import { Canvas, useFrame, useLoader, useUpdate } from 'react-three-fiber'
-import { FontLoader, Group, Mesh, TextBufferGeometry, Vector3 } from 'three'
-import React, { Suspense, useEffect, useMemo, useRef } from 'react'
+import { FontLoader, Mesh, TextBufferGeometry } from 'three'
+import React, { Suspense, useMemo, useRef, useState } from 'react'
 
-function Text({
-    children = 'testing',
-    vAlign = 'center',
-    hAlign = 'center',
-    size = 1,
-    color = '#000000',
-    ...props
-}) {
+import Controls from './Controls'
+
+type TextProps = {
+    children: string
+    curveSegments: number
+}
+
+function Text({ children, curveSegments }: TextProps) {
     const mesh = useRef<Mesh>()
     const font = useLoader(
         FontLoader,
@@ -20,7 +20,7 @@ function Text({
             font,
             size: 100,
             height: 30,
-            curveSegments: 32,
+            curveSegments: curveSegments,
             bevelEnabled: true,
             bevelThickness: 6,
             bevelSize: 2.5,
@@ -40,7 +40,7 @@ function Text({
         [children]
     )
     return (
-        <group {...props} scale={[0.1 * size, 0.1 * size, 0.1]}>
+        <group scale={[0.1, 0.1, 0.1]}>
             <mesh ref={mesh}>
                 <textBufferGeometry ref={text} attach="geometry" args={[children, config]} />
                 <meshNormalMaterial attach="material" />
@@ -49,31 +49,45 @@ function Text({
     )
 }
 
-function AnimatedTextGroup() {
-    const ref = useRef<Group>()
+function AnimatedTextGroup({ children, curveSegments }: TextProps) {
+    const [rotation, setRotation] = useState(0)
+
     useFrame(({ clock }) => {
-        if (ref && ref.current) {
-            const speed = 0.1
-            const rotation = clock.getElapsedTime() * speed
-            ref.current.rotation.x = ref.current.rotation.y = ref.current.rotation.z = rotation
-        }
+        const speed = 0.1
+        const rotation = clock.getElapsedTime() * speed
+        setRotation(rotation)
     })
+
     return (
-        <group ref={ref}>
-            <Text hAlign="left" position={[0, 4.2, 0]} children="REACT" />
-            <Text hAlign="left" position={[0, -8, 0]} children="THREE" />
+        <group rotation={[rotation, rotation, rotation]}>
+            <Text children={children} curveSegments={curveSegments} />
         </group>
     )
 }
 
-export default () => {
+type ViewProps = {
+    controlsOpacity: number
+}
+
+export default ({ controlsOpacity }: ViewProps) => {
+    const [curveSegments, setCurveSegments] = useState(32)
+
     return (
-        <Canvas camera={{ position: [0, 0, 35] }}>
-            <ambientLight intensity={2} />
-            <pointLight position={[40, 40, 40]} />
-            <Suspense fallback={null}>
-                <AnimatedTextGroup />
-            </Suspense>
-        </Canvas>
+        <>
+            <Controls
+                opacity={controlsOpacity}
+                controls={{
+                    curveSegments,
+                    setCurveSegments,
+                }}
+            />
+            <Canvas camera={{ position: [0, 0, 35] }}>
+                <ambientLight intensity={2} />
+                <pointLight position={[40, 40, 40]} />
+                <Suspense fallback={null}>
+                    <AnimatedTextGroup children="React" curveSegments={curveSegments} />
+                </Suspense>
+            </Canvas>
+        </>
     )
 }

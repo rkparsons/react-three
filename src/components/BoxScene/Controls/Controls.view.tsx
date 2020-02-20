@@ -24,6 +24,7 @@ export default ({ opacity, controls }: ViewProps) => (
                 min={1}
                 max={100}
                 onChange={(event: any, newValue: number | number[]) => {
+                    console.log('size', newValue)
                     controls.setSize(newValue as number)
                 }}
             />
