@@ -1,5 +1,5 @@
 import { GridContainer, GridItem } from './SceneGrid.style'
-import React, { UIEvent, useRef, useState } from 'react'
+import React, { UIEvent, useState } from 'react'
 
 import BoxScene from '~/components/BoxScene'
 import Direction from '~/constants/direction'
@@ -24,7 +24,11 @@ export default () => {
                 setIsEditMode={setIsEditMode}
             >
                 {(controlsOpacity, isEditMode) => (
-                    <Component controlsOpacity={controlsOpacity} isEditMode={isEditMode} />
+                    <Component
+                        controlsOpacity={controlsOpacity}
+                        isEditMode={isEditMode}
+                        setIsEditMode={setIsEditMode}
+                    />
                 )}
             </Scene>
         </GridItem>

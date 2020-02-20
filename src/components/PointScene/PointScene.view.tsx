@@ -26,9 +26,10 @@ function PointSphere({ radius, widthSegments, heightSegments }: SphereProps) {
 type ViewProps = {
     controlsOpacity: number
     isEditMode: boolean
+    setIsEditMode(isEditMode: boolean): void
 }
 
-export default ({ controlsOpacity, isEditMode }: ViewProps) => {
+export default ({ controlsOpacity, isEditMode, setIsEditMode }: ViewProps) => {
     const [radius, setRadius] = useState<number>(16)
     const [widthSegments, setWidthSegments] = useState<number>(8)
     const [heightSegments, setHeightSegments] = useState<number>(8)
@@ -38,6 +39,7 @@ export default ({ controlsOpacity, isEditMode }: ViewProps) => {
             <Controls
                 controlsOpacity={controlsOpacity}
                 isEditMode={isEditMode}
+                setIsEditMode={setIsEditMode}
                 controls={{
                     radius,
                     setRadius,

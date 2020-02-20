@@ -1,7 +1,8 @@
 import { Grid, Slider, Typography } from '@material-ui/core'
+import React, { useCallback, useEffect, useRef } from 'react'
 
 import { Controls } from './Controls.style'
-import React from 'react'
+import ReactDOM from 'react-dom'
 
 type Controls = {
     radius: number
@@ -15,12 +16,41 @@ type Controls = {
 type ViewProps = {
     controlsOpacity: number
     isEditMode: boolean
+    setIsEditMode(isEditMode: boolean): void
     controls: Controls
 }
 
-export default ({ controlsOpacity, isEditMode, controls }: ViewProps) => {
+export default ({ controlsOpacity, isEditMode, setIsEditMode, controls }: ViewProps) => {
+    const controlsRef = useRef<HTMLDivElement>(null)
+
+    const handleClick = useCallback(
+        (event: MouseEvent) => {
+            event.stopPropagation()
+
+            if (
+                controlsRef.current &&
+                isEditMode &&
+                !controlsRef.current.contains(event.target as Node)
+            ) {
+                console.log('setIsEditMode', false)
+                setIsEditMode(false)
+            }
+        },
+        [isEditMode, setIsEditMode, controlsRef]
+    )
+
+    useEffect(() => {
+        document.addEventListener('click', handleClick)
+    }, [])
+
     return isEditMode ? (
-        <Controls container spacing={2} justify="center" opacity={controlsOpacity}>
+        <Controls
+            container
+            spacing={2}
+            justify="center"
+            opacity={controlsOpacity}
+            ref={controlsRef}
+        >
             <Grid item xs={2}>
                 <Typography>Radius</Typography>
                 <Slider

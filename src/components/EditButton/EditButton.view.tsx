@@ -4,7 +4,7 @@ import { Grid } from '@material-ui/core'
 import React from 'react'
 
 type ViewProps = {
-    onClick(): void
+    onClick(event: React.MouseEvent<HTMLButtonElement, MouseEvent>): void
 }
 export default ({ onClick }: ViewProps) => {
     return (

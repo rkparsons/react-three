@@ -1,5 +1,5 @@
 import { ButtonBox, SceneBox } from './Scene.style'
-import React, { ReactNode, useEffect, useRef, useState } from 'react'
+import React, { ReactNode, useCallback, useEffect, useRef, useState } from 'react'
 
 import EditButton from '~/components/EditButton'
 
@@ -30,6 +30,16 @@ export default ({ windowHeight, isEditMode, setIsEditMode, children }: ViewProps
         return fractionInFocus > 0.7 ? convertRange(fractionInFocus, [0.7, 1], [0, 1]) : 0
     }
 
+    const handleEditClick = useCallback(
+        (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+            event.stopPropagation()
+            console.log('setting edit mode true')
+
+            setIsEditMode(true)
+        },
+        [setIsEditMode]
+    )
+
     useEffect(() => {
         if (windowHeight && scene.current) {
             const yPosition = scene.current.getBoundingClientRect().y
@@ -40,10 +50,11 @@ export default ({ windowHeight, isEditMode, setIsEditMode, children }: ViewProps
     return (
         <div ref={scene}>
             <SceneBox>
+                {/* move logic to controls so that control values can persist */}
                 {isSceneVisible() && children(getControlsOpacity(), isEditMode)}
                 {!isEditMode && (
                     <ButtonBox opacity={getControlsOpacity()}>
-                        <EditButton onClick={() => setIsEditMode(true)} />
+                        <EditButton onClick={handleEditClick} />
                     </ButtonBox>
                 )}
             </SceneBox>
