@@ -7,21 +7,12 @@ export const SceneBox = styled(BoxBase)`
     height: 100vh !important;
 `
 
-type BoxProps = {
+type ButtonBoxProps = {
     opacity: number
 }
 
 export const ButtonBox = styled(BoxBase)`
-    ${({ opacity }: BoxProps) => `
+    ${({ opacity }: ButtonBoxProps) => `
         opacity: ${opacity};
-    `}
-`
-
-export const FadeBox = styled(BoxBase)`
-    ${({ opacity }: BoxProps) => `
-        width: 100%;
-        height: 100%;
-        opacity: ${opacity};
-        transition: opacity 2s ease-in;
     `}
 `

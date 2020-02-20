@@ -1,6 +1,6 @@
 import { Canvas, useFrame, useLoader, useUpdate } from 'react-three-fiber'
 import { FontLoader, Group, Mesh, TextBufferGeometry, Vector3 } from 'three'
-import React, { Suspense, useMemo, useRef } from 'react'
+import React, { Suspense, useEffect, useMemo, useRef } from 'react'
 
 function Text({
     children = 'testing',
