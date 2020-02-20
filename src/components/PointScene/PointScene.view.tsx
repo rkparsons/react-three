@@ -1,7 +1,7 @@
 import { Canvas, useFrame } from 'react-three-fiber'
 import React, { useState } from 'react'
 
-import Controls from './Controls'
+import Controls from '~/components/Controls'
 
 type SphereProps = { radius: number; widthSegments: number; heightSegments: number }
 
@@ -32,19 +32,33 @@ export default ({ controlsOpacity }: ViewProps) => {
     const [widthSegments, setWidthSegments] = useState<number>(8)
     const [heightSegments, setHeightSegments] = useState<number>(8)
 
+    const controls = [
+        {
+            label: 'Radius',
+            value: radius,
+            set: setRadius,
+            min: 6,
+            max: 24,
+        },
+        {
+            label: 'Width Segments',
+            value: widthSegments,
+            set: setWidthSegments,
+            min: 6,
+            max: 24,
+        },
+        {
+            label: 'Height Segments',
+            value: heightSegments,
+            set: setHeightSegments,
+            min: 6,
+            max: 24,
+        },
+    ]
+
     return (
         <>
-            <Controls
-                opacity={controlsOpacity}
-                controls={{
-                    radius,
-                    setRadius,
-                    widthSegments,
-                    setWidthSegments,
-                    heightSegments,
-                    setHeightSegments,
-                }}
-            />
+            <Controls opacity={controlsOpacity} controls={controls} />
 
             <Canvas camera={{ position: [0, 0, 35] }}>
                 <ambientLight intensity={2} />

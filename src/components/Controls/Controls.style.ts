@@ -8,7 +8,7 @@ type ControlsProps = {
     opacity: number
 }
 
-export const Grid = styled(GridBase)`
+export const GridContainer = styled(GridBase)`
     ${({ theme, opacity }: ControlsProps) => ` 
         position: fixed;
         opacity: ${opacity};

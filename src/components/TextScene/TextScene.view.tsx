@@ -2,7 +2,7 @@ import { Canvas, useFrame, useLoader, useUpdate } from 'react-three-fiber'
 import { FontLoader, Mesh, TextBufferGeometry } from 'three'
 import React, { Suspense, useMemo, useRef, useState } from 'react'
 
-import Controls from './Controls'
+import Controls from '~/components/Controls'
 
 type TextProps = {
     children: string
@@ -72,15 +72,19 @@ type ViewProps = {
 export default ({ controlsOpacity }: ViewProps) => {
     const [curveSegments, setCurveSegments] = useState(32)
 
+    const controls = [
+        {
+            label: 'Curve Segments',
+            value: curveSegments,
+            set: setCurveSegments,
+            min: 1,
+            max: 100,
+        },
+    ]
+
     return (
         <>
-            <Controls
-                opacity={controlsOpacity}
-                controls={{
-                    curveSegments,
-                    setCurveSegments,
-                }}
-            />
+            <Controls opacity={controlsOpacity} controls={controls} />
             <Canvas camera={{ position: [0, 0, 35] }}>
                 <ambientLight intensity={2} />
                 <pointLight position={[40, 40, 40]} />

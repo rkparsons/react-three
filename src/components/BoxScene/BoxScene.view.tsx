@@ -1,7 +1,7 @@
 import { Canvas, useFrame } from 'react-three-fiber'
 import React, { useState } from 'react'
 
-import Controls from './Controls'
+import Controls from '~/components/Controls'
 
 type BoxProps = {
     position: number[]
