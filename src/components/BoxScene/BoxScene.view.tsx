@@ -41,17 +41,26 @@ export default ({ controlsOpacity }: ViewProps) => {
     const [size, setSize] = useState(75)
     const [rotationSpeed, setRotationSpeed] = useState(25)
 
+    const controls = [
+        {
+            label: 'Size',
+            value: size,
+            set: setSize,
+            min: 1,
+            max: 100,
+        },
+        {
+            label: 'Rotation Speed',
+            value: rotationSpeed,
+            set: setRotationSpeed,
+            min: 1,
+            max: 100,
+        },
+    ]
+
     return (
         <>
-            <Controls
-                opacity={controlsOpacity}
-                controls={{
-                    size,
-                    setSize,
-                    rotationSpeed,
-                    setRotationSpeed,
-                }}
-            />
+            <Controls opacity={controlsOpacity} controls={controls} />
             <Canvas>
                 <ambientLight />
                 <pointLight position={[10, 10, 10]} />
