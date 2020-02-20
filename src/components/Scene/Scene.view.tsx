@@ -1,4 +1,4 @@
-import { ButtonBox, SceneBox } from './Scene.style'
+import { ButtonBox, FadeBox, SceneBox } from './Scene.style'
 import React, { ReactNode, useEffect, useRef, useState } from 'react'
 
 import EditButton from '~/components/EditButton'
@@ -20,6 +20,10 @@ export default ({ windowHeight, children }: ViewProps) => {
         return fractionInFocus > 0
     }
 
+    function getChildrenOpacity() {
+        return fractionInFocus > 0 ? 1 : 0
+    }
+
     function getButtonOpacity() {
         return fractionInFocus > 0.7 ? convertRange(fractionInFocus, [0.7, 1], [0, 1]) : 0
     }
@@ -33,8 +37,8 @@ export default ({ windowHeight, children }: ViewProps) => {
 
     return (
         <div ref={scene}>
-            <SceneBox opacity={1}>
-                {isSceneVisible() && children}
+            <SceneBox>
+                <FadeBox opacity={getChildrenOpacity()}>{isSceneVisible() && children}</FadeBox>
                 <ButtonBox opacity={getButtonOpacity()}>
                     <EditButton />
                 </ButtonBox>
