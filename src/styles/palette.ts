@@ -1,9 +1,9 @@
-import indigo from '@material-ui/core/colors/indigo'
+import grey from '@material-ui/core/colors/grey'
 import pink from '@material-ui/core/colors/pink'
 import red from '@material-ui/core/colors/red'
 
 export default {
-    primary: indigo,
+    primary: grey,
     secondary: pink,
     error: red,
     contrastThreshold: 3,

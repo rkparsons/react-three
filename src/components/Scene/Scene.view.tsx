@@ -5,10 +5,12 @@ import EditButton from '~/components/EditButton'
 
 type ViewProps = {
     windowHeight: number | undefined
-    children: ReactNode
+    isEditMode: boolean
+    setIsEditMode(isEditMode: boolean): void
+    children(controlsOpacity: number, isEditMode: boolean): void
 }
 
-export default ({ windowHeight, children }: ViewProps) => {
+export default ({ windowHeight, isEditMode, setIsEditMode, children }: ViewProps) => {
     const scene = useRef<HTMLDivElement>(null)
     const [fractionInFocus, setFractionInFocus] = useState(1)
 
@@ -24,7 +26,7 @@ export default ({ windowHeight, children }: ViewProps) => {
         }
     }
 
-    function getButtonOpacity() {
+    function getControlsOpacity() {
         return fractionInFocus > 0.7 ? convertRange(fractionInFocus, [0.7, 1], [0, 1]) : 0
     }
 
@@ -38,10 +40,12 @@ export default ({ windowHeight, children }: ViewProps) => {
     return (
         <div ref={scene}>
             <SceneBox>
-                {isSceneVisible() && children}
-                <ButtonBox opacity={getButtonOpacity()}>
-                    <EditButton />
-                </ButtonBox>
+                {isSceneVisible() && children(getControlsOpacity(), isEditMode)}
+                {!isEditMode && (
+                    <ButtonBox opacity={getControlsOpacity()}>
+                        <EditButton onClick={() => setIsEditMode(true)} />
+                    </ButtonBox>
+                )}
             </SceneBox>
         </div>
     )
