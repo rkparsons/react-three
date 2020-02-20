@@ -1,6 +1,6 @@
 import { Grid, Slider, Typography } from '@material-ui/core'
 
-import { Controls } from './Controls.style'
+import ControlGrid from '~/components/ControlGrid'
 import React from 'react'
 
 type Controls = {
@@ -13,12 +13,12 @@ type Controls = {
 }
 
 type ViewProps = {
-    controlsOpacity: number
+    opacity: number
     controls: Controls
 }
 
-export default ({ controlsOpacity, controls }: ViewProps) => (
-    <Controls container spacing={2} justify="center" opacity={controlsOpacity}>
+export default ({ opacity, controls }: ViewProps) => (
+    <ControlGrid opacity={opacity}>
         <Grid item xs={2}>
             <Typography>Radius</Typography>
             <Slider
@@ -52,5 +52,5 @@ export default ({ controlsOpacity, controls }: ViewProps) => (
                 }}
             />
         </Grid>
-    </Controls>
+    </ControlGrid>
 )

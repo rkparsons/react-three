@@ -8,7 +8,7 @@ type ViewProps = {
 }
 
 export default ({ opacity, children }: ViewProps) => (
-    <Grid container spacing={2} justify="center" opacity={opacity}>
+    <Grid container spacing={4} justify="center" opacity={opacity}>
         {children}
     </Grid>
 )

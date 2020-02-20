@@ -35,7 +35,7 @@ export default ({ controlsOpacity }: ViewProps) => {
     return (
         <>
             <Controls
-                controlsOpacity={controlsOpacity}
+                opacity={controlsOpacity}
                 controls={{
                     radius,
                     setRadius,
