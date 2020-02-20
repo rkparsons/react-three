@@ -1,22 +1,17 @@
 import { Canvas, useFrame } from 'react-three-fiber'
-import { Grid, Slider, Typography } from '@material-ui/core'
-import React, { useRef, useState } from 'react'
-
-import { Mesh } from 'three'
+import React, { useState } from 'react'
 
 type SphereProps = { radius: number; widthSegments: number; heightSegments: number }
 
 function PointSphere({ radius, widthSegments, heightSegments }: SphereProps) {
-    const mesh = useRef<Mesh>()
+    const [rotation, setRotation] = useState(0)
 
     useFrame(() => {
-        if (mesh.current) {
-            mesh.current.rotation.x = mesh.current.rotation.y += 0.01
-        }
+        setRotation(rotation + 0.01)
     })
 
     return (
-        <points ref={mesh}>
+        <points rotation={[rotation, rotation, 0]}>
             <sphereBufferGeometry
                 attach="geometry"
                 args={[radius, widthSegments, heightSegments]}
