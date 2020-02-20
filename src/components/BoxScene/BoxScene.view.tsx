@@ -38,13 +38,13 @@ type ViewProps = {
 }
 
 export default ({ controlsOpacity }: ViewProps) => {
-    const [size, setSize] = useState(50)
-    const [rotationSpeed, setRotationSpeed] = useState(50)
+    const [size, setSize] = useState(75)
+    const [rotationSpeed, setRotationSpeed] = useState(25)
 
     return (
         <>
             <Controls
-                controlsOpacity={controlsOpacity}
+                opacity={controlsOpacity}
                 controls={{
                     size,
                     setSize,

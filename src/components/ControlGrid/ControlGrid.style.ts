@@ -1,4 +1,4 @@
-import { Grid, Theme } from '@material-ui/core'
+import { Grid as GridBase, Theme } from '@material-ui/core'
 
 import styled from 'styled-components'
 
@@ -7,7 +7,7 @@ type ControlsProps = {
     opacity: number
 }
 
-export const Controls = styled(Grid)`
+export const Grid = styled(GridBase)`
     ${({ theme, opacity }: ControlsProps) => `    
         position: fixed;
         opacity: ${opacity};
