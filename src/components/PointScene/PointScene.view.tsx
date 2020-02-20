@@ -1,8 +1,7 @@
 import { Canvas, useFrame } from 'react-three-fiber'
-import { Grid, Slider, Typography } from '@material-ui/core'
 import React, { useState } from 'react'
 
-import { Controls } from './PointScene.style'
+import Controls from './Controls'
 
 type SphereProps = { radius: number; widthSegments: number; heightSegments: number }
 
@@ -36,43 +35,18 @@ export default ({ controlsOpacity, isEditMode }: ViewProps) => {
 
     return (
         <>
-            {isEditMode && (
-                <Controls container spacing={2} justify="center" opacity={controlsOpacity}>
-                    <Grid item xs={2}>
-                        <Typography>Radius</Typography>
-                        <Slider
-                            value={radius}
-                            min={6}
-                            max={24}
-                            onChange={(event: any, newValue: number | number[]) => {
-                                setRadius(newValue as number)
-                            }}
-                        />
-                    </Grid>
-                    <Grid item xs={2}>
-                        <Typography>Width Segments</Typography>
-                        <Slider
-                            value={widthSegments}
-                            min={6}
-                            max={24}
-                            onChange={(event: any, newValue: number | number[]) => {
-                                setWidthSegments(newValue as number)
-                            }}
-                        />
-                    </Grid>
-                    <Grid item xs={2}>
-                        <Typography>Height Segments</Typography>
-                        <Slider
-                            value={heightSegments}
-                            min={6}
-                            max={24}
-                            onChange={(event: any, newValue: number | number[]) => {
-                                setHeightSegments(newValue as number)
-                            }}
-                        />
-                    </Grid>
-                </Controls>
-            )}
+            <Controls
+                controlsOpacity={controlsOpacity}
+                isEditMode={isEditMode}
+                controls={{
+                    radius,
+                    setRadius,
+                    widthSegments,
+                    setWidthSegments,
+                    heightSegments,
+                    setHeightSegments,
+                }}
+            />
 
             <Canvas camera={{ position: [0, 0, 35] }}>
                 <ambientLight intensity={2} />
