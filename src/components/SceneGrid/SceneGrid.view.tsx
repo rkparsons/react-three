@@ -2,6 +2,7 @@ import { GridContainer, GridItem } from './SceneGrid.style'
 import React, { UIEvent, useState } from 'react'
 
 import BoxScene from '~/components/BoxScene'
+import ImageTextureScene from '~/components/ImageTextureScene'
 import PointScene from '~/components/PointScene'
 import Scene from '~/components/Scene'
 import TextScene from '~/components/TextScene'
@@ -11,7 +12,7 @@ export default () => {
     const windowSize = useWindowSize()
     const [position, setPosition] = useState(0)
 
-    const scenes = [BoxScene, TextScene, PointScene].map((Component, index) => (
+    const scenes = [ImageTextureScene, BoxScene, TextScene, PointScene].map((Component, index) => (
         <GridItem item key={index}>
             <Scene windowHeight={windowSize.height}>
                 {controlsOpacity => <Component controlsOpacity={controlsOpacity} />}
