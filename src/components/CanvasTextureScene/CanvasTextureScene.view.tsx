@@ -1,5 +1,15 @@
+import {
+    BackSide,
+    CanvasTexture,
+    Color,
+    DoubleSide,
+    FrontSide,
+    LinearFilter,
+    Loader,
+    Side,
+    Texture,
+} from 'three'
 import { Canvas, useFrame, useLoader, useThree } from 'react-three-fiber'
-import { CanvasTexture, Color, DoubleSide, LinearFilter, Loader, Side, Texture } from 'three'
 import React, { Suspense, useEffect, useLayoutEffect, useRef, useState } from 'react'
 
 import Controls from '~/components/Controls'
@@ -37,6 +47,30 @@ const ImageTexture = ({ position }: ImageTextureProps) => {
 
     return (
         <>
+            <mesh scale={[1, 1, 1]} rotation={[0.4, -rotation, 0]} renderOrder={2}>
+                {/* <boxBufferGeometry attach="geometry" args={[2, 2, 2]} /> */}
+                <cylinderBufferGeometry
+                    attach="geometry"
+                    args={[
+                        radiusTop,
+                        radiusBottom,
+                        height,
+                        radialSegments,
+                        heightSegments,
+                        isOpenEnded,
+                        thetaStart,
+                        thetaLength,
+                    ]}
+                />
+                <meshBasicMaterial attach="material" color={'white'} side={FrontSide} transparent>
+                    <canvasTexture
+                        attach="map"
+                        image={ctx.canvas}
+                        minFilter={LinearFilter}
+                        anisotropy={gl.getMaxAnisotropy()}
+                    />
+                </meshBasicMaterial>
+            </mesh>
             <mesh scale={[1, 1, 1]} rotation={[0.4, -rotation, 0]}>
                 {/* <boxBufferGeometry attach="geometry" args={[2, 2, 2]} /> */}
                 <cylinderBufferGeometry
@@ -52,7 +86,7 @@ const ImageTexture = ({ position }: ImageTextureProps) => {
                         thetaLength,
                     ]}
                 />
-                <meshBasicMaterial attach="material" color={'white'} side={DoubleSide} transparent>
+                <meshBasicMaterial attach="material" color={'white'} side={BackSide} transparent>
                     <canvasTexture
                         attach="map"
                         image={ctx.canvas}
