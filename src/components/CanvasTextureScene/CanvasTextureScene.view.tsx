@@ -13,8 +13,8 @@ const ImageTexture = ({ position }: ImageTextureProps) => {
 
     const ctx = document.createElement('canvas').getContext('2d')!
     ctx.canvas.width = 512
-    ctx.canvas.height = 128
-    ctx.fillStyle = 'red'
+    ctx.canvas.height = 512
+    ctx.fillStyle = 'white'
     ctx.font = '50pt Arial'
     ctx.textAlign = 'center'
     ctx.textBaseline = 'middle'
@@ -27,7 +27,7 @@ const ImageTexture = ({ position }: ImageTextureProps) => {
     return (
         <>
             <mesh scale={[1, 1, 1]} rotation={[0.4, rotation, 0]}>
-                <boxBufferGeometry attach="geometry" args={[1, 1, 1]} />
+                <boxBufferGeometry attach="geometry" args={[2, 2, 2]} />
                 <meshStandardMaterial attach="material" color={'white'}>
                     <canvasTexture attach="map" image={ctx.canvas} />
                 </meshStandardMaterial>
