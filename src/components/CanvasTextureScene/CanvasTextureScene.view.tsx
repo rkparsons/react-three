@@ -10,7 +10,14 @@ type ImageTextureProps = {
 
 const ImageTexture = ({ position }: ImageTextureProps) => {
     const [rotation, setRotation] = useState(0)
-
+    const radiusTop = 2,
+        radiusBottom = 2,
+        height = 2,
+        radialSegments = 20,
+        heightSegments = 1,
+        isOpenEnded = true,
+        thetaStart = 0,
+        thetaLength = 2 * Math.PI
     const ctx = document.createElement('canvas').getContext('2d')!
     ctx.canvas.width = 512
     ctx.canvas.height = 512
@@ -27,8 +34,21 @@ const ImageTexture = ({ position }: ImageTextureProps) => {
     return (
         <>
             <mesh scale={[1, 1, 1]} rotation={[0.4, rotation, 0]}>
-                <boxBufferGeometry attach="geometry" args={[2, 2, 2]} />
-                <meshStandardMaterial attach="material" color={'white'}>
+                {/* <boxBufferGeometry attach="geometry" args={[2, 2, 2]} /> */}
+                <cylinderBufferGeometry
+                    attach="geometry"
+                    args={[
+                        radiusTop,
+                        radiusBottom,
+                        height,
+                        radialSegments,
+                        heightSegments,
+                        isOpenEnded,
+                        thetaStart,
+                        thetaLength,
+                    ]}
+                />
+                <meshStandardMaterial attach="material" color={'white'} side={DoubleSide}>
                     <canvasTexture attach="map" image={ctx.canvas} />
                 </meshStandardMaterial>
             </mesh>
