@@ -2,16 +2,13 @@ import {
     BackSide,
     BufferGeometry,
     CanvasTexture,
-    Color,
-    DoubleSide,
     FrontSide,
     LinearFilter,
-    Loader,
     Side,
     Texture,
 } from 'three'
-import { Canvas, useFrame, useLoader, useResource, useThree } from 'react-three-fiber'
-import React, { Suspense, useEffect, useLayoutEffect, useRef, useState } from 'react'
+import { Canvas, useFrame, useResource } from 'react-three-fiber'
+import React, { Suspense, useState } from 'react'
 
 import Controls from '~/components/Controls'
 
@@ -29,7 +26,6 @@ type ImageTextureProps = {
 }
 
 const ImageTexture = ({ position }: ImageTextureProps) => {
-    const { gl, camera } = useThree()
     const [rotation, setRotation] = useState(0)
     const [geometryRef, geometry] = useResource<BufferGeometry>()
     const [textureRef, texture] = useResource<CanvasTexture>()
