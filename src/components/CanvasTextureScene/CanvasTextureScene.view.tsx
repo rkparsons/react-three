@@ -1,5 +1,6 @@
 import {
     BackSide,
+    BufferGeometry,
     CanvasTexture,
     Color,
     DoubleSide,
@@ -9,7 +10,7 @@ import {
     Side,
     Texture,
 } from 'three'
-import { Canvas, useFrame, useLoader, useThree } from 'react-three-fiber'
+import { Canvas, useFrame, useLoader, useResource, useThree } from 'react-three-fiber'
 import React, { Suspense, useEffect, useLayoutEffect, useRef, useState } from 'react'
 
 import Controls from '~/components/Controls'
@@ -21,6 +22,8 @@ type ImageTextureProps = {
 const ImageTexture = ({ position }: ImageTextureProps) => {
     const { gl, camera } = useThree()
     const [rotation, setRotation] = useState(0)
+    const [geometryRef, geometry] = useResource<BufferGeometry>()
+    const [textureRef, texture] = useResource<CanvasTexture>()
 
     const canvasWidth = 500,
         canvasHeight = 250,
@@ -47,53 +50,42 @@ const ImageTexture = ({ position }: ImageTextureProps) => {
 
     return (
         <>
-            <mesh scale={[1, 1, 1]} rotation={[0.4, -rotation, 0]} renderOrder={2}>
-                {/* <boxBufferGeometry attach="geometry" args={[2, 2, 2]} /> */}
-                <cylinderBufferGeometry
-                    attach="geometry"
-                    args={[
-                        radiusTop,
-                        radiusBottom,
-                        height,
-                        radialSegments,
-                        heightSegments,
-                        isOpenEnded,
-                        thetaStart,
-                        thetaLength,
-                    ]}
+            <cylinderBufferGeometry
+                ref={geometryRef}
+                args={[
+                    radiusTop,
+                    radiusBottom,
+                    height,
+                    radialSegments,
+                    heightSegments,
+                    isOpenEnded,
+                    thetaStart,
+                    thetaLength,
+                ]}
+            />
+            <canvasTexture ref={textureRef} image={ctx.canvas} minFilter={LinearFilter} />
+            <mesh
+                scale={[1, 1, 1]}
+                rotation={[0.4, -rotation, 0]}
+                renderOrder={2}
+                geometry={geometry}
+            >
+                <meshBasicMaterial
+                    attach="material"
+                    map={texture}
+                    color={'white'}
+                    side={FrontSide}
+                    transparent
                 />
-                <meshBasicMaterial attach="material" color={'white'} side={FrontSide} transparent>
-                    <canvasTexture
-                        attach="map"
-                        image={ctx.canvas}
-                        minFilter={LinearFilter}
-                        anisotropy={gl.getMaxAnisotropy()}
-                    />
-                </meshBasicMaterial>
             </mesh>
-            <mesh scale={[1, 1, 1]} rotation={[0.4, -rotation, 0]}>
-                {/* <boxBufferGeometry attach="geometry" args={[2, 2, 2]} /> */}
-                <cylinderBufferGeometry
-                    attach="geometry"
-                    args={[
-                        radiusTop,
-                        radiusBottom,
-                        height,
-                        radialSegments,
-                        heightSegments,
-                        isOpenEnded,
-                        thetaStart,
-                        thetaLength,
-                    ]}
+            <mesh scale={[1, 1, 1]} rotation={[0.4, -rotation, 0]} geometry={geometry}>
+                <meshBasicMaterial
+                    attach="material"
+                    map={texture}
+                    color={'white'}
+                    side={BackSide}
+                    transparent
                 />
-                <meshBasicMaterial attach="material" color={'white'} side={BackSide} transparent>
-                    <canvasTexture
-                        attach="map"
-                        image={ctx.canvas}
-                        minFilter={LinearFilter}
-                        anisotropy={gl.getMaxAnisotropy()}
-                    />
-                </meshBasicMaterial>
             </mesh>
         </>
     )
