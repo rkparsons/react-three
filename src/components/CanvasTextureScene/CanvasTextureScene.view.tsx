@@ -64,29 +64,26 @@ const ImageTexture = ({ position }: ImageTextureProps) => {
                 ]}
             />
             <canvasTexture ref={textureRef} image={ctx.canvas} minFilter={LinearFilter} />
-            <mesh
-                scale={[1, 1, 1]}
-                rotation={[0.4, -rotation, 0]}
-                renderOrder={2}
-                geometry={geometry}
-            >
-                <meshBasicMaterial
-                    attach="material"
-                    map={texture}
-                    color={'white'}
-                    side={FrontSide}
-                    transparent
-                />
-            </mesh>
-            <mesh scale={[1, 1, 1]} rotation={[0.4, -rotation, 0]} geometry={geometry}>
-                <meshBasicMaterial
-                    attach="material"
-                    map={texture}
-                    color={'white'}
-                    side={BackSide}
-                    transparent
-                />
-            </mesh>
+            <group scale={[1, 1, 1]} rotation={[0.4, -rotation, 0]}>
+                <mesh renderOrder={2} geometry={geometry}>
+                    <meshBasicMaterial
+                        attach="material"
+                        map={texture}
+                        color={'white'}
+                        side={FrontSide}
+                        transparent
+                    />
+                </mesh>
+                <mesh geometry={geometry}>
+                    <meshBasicMaterial
+                        attach="material"
+                        map={texture}
+                        color={'white'}
+                        side={BackSide}
+                        transparent
+                    />
+                </mesh>
+            </group>
         </>
     )
 }
