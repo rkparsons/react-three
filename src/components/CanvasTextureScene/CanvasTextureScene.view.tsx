@@ -15,6 +15,15 @@ import React, { Suspense, useEffect, useLayoutEffect, useRef, useState } from 'r
 
 import Controls from '~/components/Controls'
 
+type MaterialProps = {
+    texture: Texture
+    side: Side
+}
+
+const Material = ({ texture, side }: MaterialProps) => (
+    <meshBasicMaterial attach="material" map={texture} color={'white'} side={side} transparent />
+)
+
 type ImageTextureProps = {
     position: number[]
 }
@@ -66,22 +75,10 @@ const ImageTexture = ({ position }: ImageTextureProps) => {
             <canvasTexture ref={textureRef} image={ctx.canvas} minFilter={LinearFilter} />
             <group scale={[1, 1, 1]} rotation={[0.4, -rotation, 0]}>
                 <mesh renderOrder={2} geometry={geometry}>
-                    <meshBasicMaterial
-                        attach="material"
-                        map={texture}
-                        color={'white'}
-                        side={FrontSide}
-                        transparent
-                    />
+                    <Material texture={texture} side={FrontSide} />
                 </mesh>
                 <mesh geometry={geometry}>
-                    <meshBasicMaterial
-                        attach="material"
-                        map={texture}
-                        color={'white'}
-                        side={BackSide}
-                        transparent
-                    />
+                    <Material texture={texture} side={BackSide} />
                 </mesh>
             </group>
         </>
