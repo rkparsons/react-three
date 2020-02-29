@@ -2,7 +2,7 @@ import { Canvas, useFrame, useLoader } from 'react-three-fiber'
 import { Color, DoubleSide, Side, TextureLoader } from 'three'
 import React, { Suspense, useState } from 'react'
 
-import Controls from './node_modules/~/components/Controls'
+import Controls from '~/components/Controls'
 
 type ImageTextureProps = {
     position: number[]
