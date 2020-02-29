@@ -17,7 +17,7 @@ const ImageTexture = ({ position }: ImageTextureProps) => {
         radiusTop = canvasWidth / (2 * Math.PI),
         radiusBottom = radiusTop,
         height = canvasHeight,
-        radialSegments = 20,
+        radialSegments = 64,
         heightSegments = 1,
         isOpenEnded = true,
         thetaStart = 0,
