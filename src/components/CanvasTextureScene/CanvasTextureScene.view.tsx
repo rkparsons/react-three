@@ -9,11 +9,11 @@ type ImageTextureProps = {
 }
 
 const ImageTexture = ({ position }: ImageTextureProps) => {
-    const canvasRef = useRef<HTMLCanvasElement>(null)
+    const canvasContainer = useRef<HTMLDivElement>(null)
 
     useLayoutEffect(() => {
-        if (canvasRef.current) {
-            const ctx = canvasRef.current.getContext('2d')!
+        if (canvasContainer.current) {
+            const ctx = document.createElement('canvas').getContext('2d')!
             ctx.canvas.width = 512
             ctx.canvas.height = 128
             ctx.fillStyle = 'white'
@@ -21,12 +21,14 @@ const ImageTexture = ({ position }: ImageTextureProps) => {
             ctx.textAlign = 'center'
             ctx.textBaseline = 'middle'
             ctx.fillText('Moving Borders', ctx.canvas.width / 2, ctx.canvas.height / 2)
+
+            canvasContainer.current.appendChild(ctx.canvas)
         }
-    }, [canvasRef.current])
+    }, [canvasContainer.current])
 
     return (
         <>
-            <canvas ref={canvasRef} />
+            <div ref={canvasContainer}></div>
             {/* <mesh
                 position={position}
                 scale={[1, 1, 1].map(axis => (axis * 75) / 100)}
