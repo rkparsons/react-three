@@ -9,39 +9,29 @@ type ImageTextureProps = {
 }
 
 const ImageTexture = ({ position }: ImageTextureProps) => {
-    const canvasContainer = useRef<HTMLDivElement>(null)
+    const [rotation, setRotation] = useState(0)
 
-    useLayoutEffect(() => {
-        if (canvasContainer.current) {
-            const ctx = document.createElement('canvas').getContext('2d')!
-            ctx.canvas.width = 512
-            ctx.canvas.height = 128
-            ctx.fillStyle = 'white'
-            ctx.font = '50pt Arial'
-            ctx.textAlign = 'center'
-            ctx.textBaseline = 'middle'
-            ctx.fillText('Moving Borders', ctx.canvas.width / 2, ctx.canvas.height / 2)
+    const ctx = document.createElement('canvas').getContext('2d')!
+    ctx.canvas.width = 512
+    ctx.canvas.height = 128
+    ctx.fillStyle = 'red'
+    ctx.font = '50pt Arial'
+    ctx.textAlign = 'center'
+    ctx.textBaseline = 'middle'
+    ctx.fillText('Moving Borders', ctx.canvas.width / 2, ctx.canvas.height / 2)
 
-            canvasContainer.current.appendChild(ctx.canvas)
-        }
-    }, [canvasContainer.current])
+    useFrame(() => {
+        setRotation(rotation + 10 / 1000)
+    })
 
     return (
         <>
-            <div ref={canvasContainer}></div>
-            {/* <mesh
-                position={position}
-                scale={[1, 1, 1].map(axis => (axis * 75) / 100)}
-                rotation={[0.4, 0, 0]}
-            >
-                <cylinderBufferGeometry attach="geometry" args={[2, 2, 0.5, 64, 1, true]} />
-                <meshStandardMaterial
-                    attach="material"
-                    map={texture}
-                    side={DoubleSide}
-                    color="orange"
-                />
-            </mesh> */}
+            <mesh scale={[1, 1, 1]} rotation={[0.4, rotation, 0]}>
+                <boxBufferGeometry attach="geometry" args={[1, 1, 1]} />
+                <meshStandardMaterial attach="material" color={'white'}>
+                    <canvasTexture attach="map" image={ctx.canvas} />
+                </meshStandardMaterial>
+            </mesh>
         </>
     )
 }
@@ -53,14 +43,13 @@ type ViewProps = {
 export default ({ controlsOpacity }: ViewProps) => {
     return (
         <>
-            <ImageTexture position={[0, 0, 0]} />
-            {/* <Canvas>
+            <Canvas>
                 <Suspense fallback={null}>
                     <ambientLight />
                     <pointLight position={[10, 10, 10]} />
                     <ImageTexture position={[0, 0, 0]} />
                 </Suspense>
-            </Canvas> */}
+            </Canvas>
         </>
     )
 }
