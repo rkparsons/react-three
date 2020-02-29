@@ -9,19 +9,22 @@ type ImageTextureProps = {
 }
 
 const ImageTexture = ({ position }: ImageTextureProps) => {
-    const { gl } = useThree()
+    const { gl, camera } = useThree()
     const [rotation, setRotation] = useState(0)
-    const radiusTop = 2,
-        radiusBottom = 2,
-        height = 2,
+
+    const canvasWidth = 500,
+        canvasHeight = 250,
+        radiusTop = canvasWidth / (2 * Math.PI),
+        radiusBottom = radiusTop,
+        height = canvasHeight,
         radialSegments = 20,
         heightSegments = 1,
         isOpenEnded = true,
         thetaStart = 0,
         thetaLength = 2 * Math.PI
     const ctx = document.createElement('canvas').getContext('2d')!
-    ctx.canvas.width = 500
-    ctx.canvas.height = 250
+    ctx.canvas.width = canvasWidth
+    ctx.canvas.height = canvasHeight
     ctx.fillStyle = 'white'
     ctx.font = '50pt Arial'
     ctx.textAlign = 'center'
@@ -49,14 +52,14 @@ const ImageTexture = ({ position }: ImageTextureProps) => {
                         thetaLength,
                     ]}
                 />
-                <meshStandardMaterial attach="material" color={'white'} side={DoubleSide}>
+                <meshBasicMaterial attach="material" color={'white'} side={DoubleSide} transparent>
                     <canvasTexture
                         attach="map"
                         image={ctx.canvas}
                         minFilter={LinearFilter}
                         anisotropy={gl.getMaxAnisotropy()}
                     />
-                </meshStandardMaterial>
+                </meshBasicMaterial>
             </mesh>
         </>
     )
@@ -69,10 +72,8 @@ type ViewProps = {
 export default ({ controlsOpacity }: ViewProps) => {
     return (
         <>
-            <Canvas>
+            <Canvas camera={{ position: [0, 0, 200] }}>
                 <Suspense fallback={null}>
-                    <ambientLight />
-                    <pointLight position={[10, 10, 10]} />
                     <ImageTexture position={[0, 0, 0]} />
                 </Suspense>
             </Canvas>
