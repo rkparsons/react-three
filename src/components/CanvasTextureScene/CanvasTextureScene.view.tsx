@@ -9,17 +9,25 @@ type ImageTextureProps = {
 }
 
 const ImageTexture = ({ position }: ImageTextureProps) => {
-    const ctx = document.createElement('canvas').getContext('2d')!
-    ctx.canvas.width = 100
-    ctx.canvas.height = 100
-    ctx.fillStyle = 'white'
-    ctx.font = '10px Arial'
-    ctx.fillText('Hello World', 10, 100)
-    const texture = new CanvasTexture(ctx.canvas)
+    const canvasRef = useRef<HTMLCanvasElement>(null)
+
+    useLayoutEffect(() => {
+        if (canvasRef.current) {
+            const ctx = canvasRef.current.getContext('2d')!
+            ctx.canvas.width = 512
+            ctx.canvas.height = 128
+            ctx.fillStyle = 'white'
+            ctx.font = '50pt Arial'
+            ctx.textAlign = 'center'
+            ctx.textBaseline = 'middle'
+            ctx.fillText('Moving Borders', ctx.canvas.width / 2, ctx.canvas.height / 2)
+        }
+    }, [canvasRef.current])
 
     return (
         <>
-            <mesh
+            <canvas ref={canvasRef} />
+            {/* <mesh
                 position={position}
                 scale={[1, 1, 1].map(axis => (axis * 75) / 100)}
                 rotation={[0.4, 0, 0]}
@@ -31,7 +39,7 @@ const ImageTexture = ({ position }: ImageTextureProps) => {
                     side={DoubleSide}
                     color="orange"
                 />
-            </mesh>
+            </mesh> */}
         </>
     )
 }
@@ -43,13 +51,14 @@ type ViewProps = {
 export default ({ controlsOpacity }: ViewProps) => {
     return (
         <>
-            <Canvas>
+            <ImageTexture position={[0, 0, 0]} />
+            {/* <Canvas>
                 <Suspense fallback={null}>
                     <ambientLight />
                     <pointLight position={[10, 10, 10]} />
                     <ImageTexture position={[0, 0, 0]} />
                 </Suspense>
-            </Canvas>
+            </Canvas> */}
         </>
     )
 }
