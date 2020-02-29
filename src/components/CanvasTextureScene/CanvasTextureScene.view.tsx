@@ -1,5 +1,5 @@
-import { Canvas, useFrame, useLoader } from 'react-three-fiber'
-import { CanvasTexture, Color, DoubleSide, Loader, Side, Texture } from 'three'
+import { Canvas, useFrame, useLoader, useThree } from 'react-three-fiber'
+import { CanvasTexture, Color, DoubleSide, LinearFilter, Loader, Side, Texture } from 'three'
 import React, { Suspense, useEffect, useLayoutEffect, useRef, useState } from 'react'
 
 import Controls from '~/components/Controls'
@@ -9,6 +9,7 @@ type ImageTextureProps = {
 }
 
 const ImageTexture = ({ position }: ImageTextureProps) => {
+    const { gl } = useThree()
     const [rotation, setRotation] = useState(0)
     const radiusTop = 2,
         radiusBottom = 2,
@@ -19,8 +20,8 @@ const ImageTexture = ({ position }: ImageTextureProps) => {
         thetaStart = 0,
         thetaLength = 2 * Math.PI
     const ctx = document.createElement('canvas').getContext('2d')!
-    ctx.canvas.width = 512
-    ctx.canvas.height = 512
+    ctx.canvas.width = 500
+    ctx.canvas.height = 250
     ctx.fillStyle = 'white'
     ctx.font = '50pt Arial'
     ctx.textAlign = 'center'
@@ -33,7 +34,7 @@ const ImageTexture = ({ position }: ImageTextureProps) => {
 
     return (
         <>
-            <mesh scale={[1, 1, 1]} rotation={[0.4, rotation, 0]}>
+            <mesh scale={[1, 1, 1]} rotation={[0.4, -rotation, 0]}>
                 {/* <boxBufferGeometry attach="geometry" args={[2, 2, 2]} /> */}
                 <cylinderBufferGeometry
                     attach="geometry"
@@ -49,7 +50,12 @@ const ImageTexture = ({ position }: ImageTextureProps) => {
                     ]}
                 />
                 <meshStandardMaterial attach="material" color={'white'} side={DoubleSide}>
-                    <canvasTexture attach="map" image={ctx.canvas} />
+                    <canvasTexture
+                        attach="map"
+                        image={ctx.canvas}
+                        minFilter={LinearFilter}
+                        anisotropy={gl.getMaxAnisotropy()}
+                    />
                 </meshStandardMaterial>
             </mesh>
         </>
