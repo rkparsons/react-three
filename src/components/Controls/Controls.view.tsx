@@ -17,8 +17,8 @@ export default ({ opacity, controls }: ViewProps) => {
     return (
         <FadeIn opacity={fadeInOpacity}>
             <GridContainer container spacing={4} justify="center" opacity={opacity}>
-                {controls.map(control => (
-                    <Grid item xs={2}>
+                {controls.map((control, index) => (
+                    <Grid item xs={2} key={index}>
                         <Typography>{control.label}</Typography>
                         <Slider
                             value={control.value}
