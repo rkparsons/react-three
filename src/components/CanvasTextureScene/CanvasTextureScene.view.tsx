@@ -30,7 +30,7 @@ const ImageTexture = ({ position }: ImageTextureProps) => {
     const [geometryRef, geometry] = useResource<BufferGeometry>()
     const [textureRef, texture] = useResource<CanvasTexture>()
 
-    const canvasWidth = 500,
+    const canvasWidth = 640,
         canvasHeight = 250,
         radiusTop = canvasWidth / (2 * Math.PI),
         radiusBottom = radiusTop,
@@ -44,10 +44,10 @@ const ImageTexture = ({ position }: ImageTextureProps) => {
     ctx.canvas.width = canvasWidth
     ctx.canvas.height = canvasHeight
     ctx.fillStyle = 'white'
-    ctx.font = '50pt Arial'
+    ctx.font = '25pt Arial'
     ctx.textAlign = 'center'
     ctx.textBaseline = 'middle'
-    ctx.fillText('Moving Borders', ctx.canvas.width / 2, ctx.canvas.height / 2)
+    ctx.fillText('MOVING BORDERS MOVING BORDERS', ctx.canvas.width / 2, ctx.canvas.height / 2)
 
     useFrame(() => {
         setRotation(rotation + 10 / 1000)
