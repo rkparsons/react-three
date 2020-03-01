@@ -9,8 +9,6 @@ type ImageTextureProps = {
 }
 
 const ImageTexture = ({ position }: ImageTextureProps) => {
-    const [isHover, setIsHover] = useState(false)
-    const [isActive, setIsActive] = useState(false)
     const [rotation, setRotation] = useState(0)
 
     const texture = useLoader(
@@ -21,18 +19,11 @@ const ImageTexture = ({ position }: ImageTextureProps) => {
     texture.offset.y = 1 - texture.repeat.y
 
     useFrame(() => {
-        setRotation(rotation + 25 / 1000)
+        setRotation(rotation + 0.01)
     })
 
     return (
-        <mesh
-            position={position}
-            scale={(isActive ? [1.5, 1.5, 1.5] : [1, 1, 1]).map(axis => (axis * 75) / 100)}
-            onClick={() => setIsActive(!isActive)}
-            onPointerOver={() => setIsHover(true)}
-            onPointerOut={() => setIsHover(false)}
-            rotation={[0.4, rotation, 0]}
-        >
+        <mesh position={position} scale={[1.5, 1.5, 1.5]} rotation={[0.4, -rotation, 0]}>
             <cylinderBufferGeometry attach="geometry" args={[2, 2, 0.5, 64, 1, true]} />
             <meshStandardMaterial
                 attach="material"
