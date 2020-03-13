@@ -29,6 +29,7 @@ const ImageTexture = ({ position }: ImageTextureProps) => {
     const [rotation, setRotation] = useState(0)
     const [geometryRef, geometry] = useResource<BufferGeometry>()
     const [textureRef, texture] = useResource<CanvasTexture>()
+    const [speed, setSpeed] = useState(0.01)
 
     const canvasWidth = 2048,
         canvasHeight = canvasWidth / 4,
@@ -51,7 +52,7 @@ const ImageTexture = ({ position }: ImageTextureProps) => {
     ctx.fillText('MOVING BORDERS MOVING BORDERS', ctx.canvas.width / 2, ctx.canvas.height / 2)
 
     useFrame(() => {
-        setRotation(rotation + 10 / 1000)
+        setRotation(rotation + speed)
     })
 
     return (
@@ -70,7 +71,12 @@ const ImageTexture = ({ position }: ImageTextureProps) => {
                 ]}
             />
             <canvasTexture ref={textureRef} image={ctx.canvas} minFilter={LinearFilter} />
-            <group scale={[scale, scale, scale]} rotation={[0.4, -rotation, 0]}>
+            <group
+                scale={[scale, scale, scale]}
+                rotation={[0.4, -rotation, 0]}
+                onPointerOver={() => setSpeed(0.02)}
+                onPointerOut={() => setSpeed(0.01)}
+            >
                 <mesh renderOrder={2} geometry={geometry}>
                     <Material texture={texture} side={FrontSide} />
                 </mesh>
