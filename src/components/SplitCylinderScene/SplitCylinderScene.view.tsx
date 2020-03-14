@@ -114,16 +114,16 @@ export default ({ controlsOpacity }: ViewProps) => {
             const ctx = testCanvas.current.getContext('2d')!
             const text = 'MOVE'
             const canvasWidth = 256
-            const textHeight = 30
+            const textHeight = 15
             testCanvas.current.width = canvasWidth
-            testCanvas.current.height = textHeight
             ctx.font = `${textHeight}pt Arial`
             ctx.fillStyle = 'white'
-            ctx.clearRect(0, 0, 400, 400)
-            var textWidth = ctx.measureText(text).width
-            console.log('textWidth', textWidth)
-            console.log('width', canvasWidth)
-            ctx.scale(canvasWidth / textWidth, 1)
+            const textWidth = ctx.measureText(text).width
+            const aspectRatio = textWidth / textHeight
+            const canvasHeight = canvasWidth / aspectRatio
+            // testCanvas.current.height = canvasHeight
+
+            ctx.scale(canvasWidth / textWidth, canvasHeight / textHeight)
             ctx.fillText(text, 0, textHeight)
             ctx.restore()
         }
