@@ -36,7 +36,8 @@ const ImageTexture = ({ isHover, setIsHover, canvas }: ImageTextureProps) => {
     const [speed, setSpeed] = useState(0.01)
 
     const radiusTop = canvas.width / (2 * Math.PI),
-        radiusBottom = radiusTop,
+        radiusFactor = 1.03,
+        radiusBottom = radiusFactor * radiusTop,
         height = canvas.height,
         radialSegments = 64,
         heightSegments = 1,
@@ -97,7 +98,7 @@ export default ({ controlsOpacity }: ViewProps) => {
 
     const canvas = useMemo(() => {
         const ctx = document.createElement('canvas').getContext('2d')!
-        const text = 'MOVING BORDERS MOVING BORDERS '
+        const text = 'MOVING BORDERS  MOVING BORDERS  '
         const canvasWidth = 1024
         const textHeight = 64
         ctx.canvas.width = canvasWidth
