@@ -14,10 +14,8 @@ export const Canvas = styled(({ isHover, ...rest }: CanvasProps) => <R3FCanvas {
     `}
 `
 
-export const TestCanvas = styled.canvas`
-    margin-top: 100px;
-`
-
 export const TestCanvasGrid = styled(Grid)`
+    position: absolute;
+    top: 100px;
     width: 100%;
 `
