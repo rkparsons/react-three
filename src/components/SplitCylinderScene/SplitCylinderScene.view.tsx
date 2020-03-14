@@ -112,19 +112,20 @@ export default ({ controlsOpacity }: ViewProps) => {
     useEffect(() => {
         if (testCanvas.current) {
             const ctx = testCanvas.current.getContext('2d')!
-            const text = 'MOVE'
-            const canvasWidth = 256
-            const textHeight = 15
+            const text = 'MOVING BORDERS'
+            const canvasWidth = 512
+            const textHeight = 64
             testCanvas.current.width = canvasWidth
             ctx.font = `${textHeight}pt Arial`
-            ctx.fillStyle = 'white'
             const textWidth = ctx.measureText(text).width
             const aspectRatio = textWidth / textHeight
-            const canvasHeight = canvasWidth / aspectRatio
-            // testCanvas.current.height = canvasHeight
+            const canvasHeight = Math.ceil(canvasWidth / aspectRatio)
+            testCanvas.current.height = canvasHeight
+            ctx.font = `${textHeight}pt Arial`
+            ctx.fillStyle = 'white'
 
             ctx.scale(canvasWidth / textWidth, canvasHeight / textHeight)
-            ctx.fillText(text, 0, textHeight)
+            ctx.fillText(text, 0, textHeight - 1)
             ctx.restore()
         }
     }, [testCanvas.current])

@@ -15,7 +15,7 @@ export const Canvas = styled(({ isHover, ...rest }: CanvasProps) => <R3FCanvas {
 `
 
 export const TestCanvas = styled.canvas`
-    border: 1px solid white;
+    margin-top: 100px;
 `
 
 export const TestCanvasGrid = styled(Grid)`
