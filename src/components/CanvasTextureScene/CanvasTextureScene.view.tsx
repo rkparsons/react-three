@@ -8,7 +8,7 @@ import {
     Texture,
 } from 'three'
 import { Canvas, useFrame, useResource } from 'react-three-fiber'
-import React, { Suspense, useState } from 'react'
+import React, { Suspense, useMemo, useState } from 'react'
 
 import Controls from '~/components/Controls'
 
@@ -21,11 +21,7 @@ const Material = ({ texture, side }: MaterialProps) => (
     <meshBasicMaterial attach="material" map={texture} color={'white'} side={side} transparent />
 )
 
-type ImageTextureProps = {
-    position: number[]
-}
-
-const ImageTexture = ({ position }: ImageTextureProps) => {
+const ImageTexture = () => {
     const [rotation, setRotation] = useState(0)
     const [geometryRef, geometry] = useResource<BufferGeometry>()
     const [textureRef, texture] = useResource<CanvasTexture>()
@@ -42,14 +38,19 @@ const ImageTexture = ({ position }: ImageTextureProps) => {
         thetaStart = 0,
         thetaLength = 2 * Math.PI,
         scale = 512 / canvasWidth
-    const ctx = document.createElement('canvas').getContext('2d')!
-    ctx.canvas.width = canvasWidth
-    ctx.canvas.height = canvasHeight
-    ctx.fillStyle = 'white'
-    ctx.font = `${canvasWidth / 19.1}px Arial`
-    ctx.textAlign = 'center'
-    ctx.textBaseline = 'middle'
-    ctx.fillText('MOVING BORDERS MOVING BORDERS', ctx.canvas.width / 2, ctx.canvas.height / 2)
+
+    const canvas = useMemo(() => {
+        const ctx = document.createElement('canvas').getContext('2d')!
+        ctx.canvas.width = canvasWidth
+        ctx.canvas.height = canvasHeight
+        ctx.fillStyle = 'white'
+        ctx.font = `${canvasWidth / 19.1}px Arial`
+        ctx.textAlign = 'center'
+        ctx.textBaseline = 'middle'
+        ctx.fillText('MOVING BORDERS MOVING BORDERS', ctx.canvas.width / 2, ctx.canvas.height / 2)
+
+        return ctx.canvas
+    }, [canvasWidth, canvasHeight])
 
     useFrame(() => {
         setRotation(rotation + speed)
@@ -70,7 +71,7 @@ const ImageTexture = ({ position }: ImageTextureProps) => {
                     thetaLength,
                 ]}
             />
-            <canvasTexture ref={textureRef} image={ctx.canvas} minFilter={LinearFilter} />
+            <canvasTexture ref={textureRef} image={canvas} minFilter={LinearFilter} />
             <group
                 scale={[scale, scale, scale]}
                 rotation={[0.4, -rotation, 0]}
@@ -97,7 +98,7 @@ export default ({ controlsOpacity }: ViewProps) => {
         <>
             <Canvas camera={{ position: [0, 0, 200] }}>
                 <Suspense fallback={null}>
-                    <ImageTexture position={[0, 0, 0]} />
+                    <ImageTexture />
                 </Suspense>
             </Canvas>
         </>
