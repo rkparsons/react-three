@@ -7,11 +7,12 @@ import {
     Side,
     Texture,
 } from 'three'
-import React, { Suspense, useEffect, useMemo, useState } from 'react'
+import { Canvas, TestCanvas, TestCanvasGrid } from './SplitCylinderScene.view.style'
+import React, { Suspense, useEffect, useMemo, useRef, useState } from 'react'
 import { useFrame, useResource } from 'react-three-fiber'
 
-import { Canvas } from './CanvasTextureScene.view.style'
 import Controls from '~/components/Controls'
+import { Grid } from '@material-ui/core'
 
 type MaterialProps = {
     texture: Texture
@@ -106,9 +107,35 @@ type ViewProps = {
 export default ({ controlsOpacity }: ViewProps) => {
     // todo: hover with raycasting?
     const [isHover, setIsHover] = useState(false)
+    const testCanvas = useRef<HTMLCanvasElement>(null)
+
+    useEffect(() => {
+        if (testCanvas.current) {
+            const ctx = testCanvas.current.getContext('2d')!
+            const text = 'MOVE'
+            const width = 256
+            const height = 30
+            testCanvas.current.width = width
+            testCanvas.current.height = height
+            ctx.font = `${height}pt Arial`
+            ctx.fillStyle = 'white'
+            ctx.clearRect(0, 0, 400, 400)
+            var textWidth = ctx.measureText(text).width
+            console.log('textWidth', textWidth)
+            console.log('width', width)
+            ctx.scale(width / textWidth, 1)
+            ctx.fillText(text, 0, height)
+            ctx.restore()
+        }
+    }, [testCanvas.current])
 
     return (
         <>
+            <TestCanvasGrid container alignItems="center" justify="center">
+                <Grid item>
+                    <TestCanvas ref={testCanvas} />
+                </Grid>
+            </TestCanvasGrid>
             <Canvas camera={{ position: [0, 0, 200] }} isHover={isHover}>
                 <Suspense fallback={null}>
                     <ImageTexture isHover={isHover} setIsHover={setIsHover} />
