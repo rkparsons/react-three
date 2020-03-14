@@ -98,7 +98,7 @@ export default ({ controlsOpacity }: ViewProps) => {
 
     const canvas = useMemo(() => {
         const ctx = document.createElement('canvas').getContext('2d')!
-        const text = 'MOVING BORDERS  MOVING BORDERS  '
+        const text = 'MOVING BORDERS  '
         const canvasWidth = 1024
         const textHeight = 64
         ctx.canvas.width = canvasWidth
