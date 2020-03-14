@@ -7,9 +7,10 @@ import {
     Side,
     Texture,
 } from 'three'
-import { Canvas, useFrame, useResource } from 'react-three-fiber'
-import React, { Suspense, useMemo, useState } from 'react'
+import React, { Suspense, useEffect, useMemo, useState } from 'react'
+import { useFrame, useResource } from 'react-three-fiber'
 
+import { Canvas } from './CanvasTextureScene.view.style'
 import Controls from '~/components/Controls'
 
 type MaterialProps = {
@@ -21,7 +22,12 @@ const Material = ({ texture, side }: MaterialProps) => (
     <meshBasicMaterial attach="material" map={texture} color={'white'} side={side} transparent />
 )
 
-const ImageTexture = () => {
+type ImageTextureProps = {
+    isHover: boolean
+    setIsHover(isHover: boolean): void
+}
+
+const ImageTexture = ({ isHover, setIsHover }: ImageTextureProps) => {
     const [rotation, setRotation] = useState(0)
     const [geometryRef, geometry] = useResource<BufferGeometry>()
     const [textureRef, texture] = useResource<CanvasTexture>()
@@ -52,6 +58,10 @@ const ImageTexture = () => {
         return ctx.canvas
     }, [canvasWidth, canvasHeight])
 
+    useEffect(() => {
+        setSpeed(isHover ? 0.02 : 0.01)
+    }, [isHover])
+
     useFrame(() => {
         setRotation(rotation + speed)
     })
@@ -75,8 +85,8 @@ const ImageTexture = () => {
             <group
                 scale={[scale, scale, scale]}
                 rotation={[0.4, -rotation, 0]}
-                onPointerOver={() => setSpeed(0.02)}
-                onPointerOut={() => setSpeed(0.01)}
+                onPointerOver={() => setIsHover(true)}
+                onPointerOut={() => setIsHover(false)}
             >
                 <mesh renderOrder={2} geometry={geometry}>
                     <Material texture={texture} side={FrontSide} />
@@ -94,11 +104,13 @@ type ViewProps = {
 }
 
 export default ({ controlsOpacity }: ViewProps) => {
+    const [isHover, setIsHover] = useState(false)
+
     return (
         <>
-            <Canvas camera={{ position: [0, 0, 200] }}>
+            <Canvas camera={{ position: [0, 0, 200] }} isHover={isHover}>
                 <Suspense fallback={null}>
-                    <ImageTexture />
+                    <ImageTexture isHover={isHover} setIsHover={setIsHover} />
                 </Suspense>
             </Canvas>
         </>
