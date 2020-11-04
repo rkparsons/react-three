@@ -8,6 +8,7 @@ import PointScene from '~/components/PointScene'
 import Scene from '~/components/Scene'
 import SplitCylinderScene from '~/components/SplitCylinderScene'
 import TextScene from '~/components/TextScene'
+import VideoBoxScene from '~/components/VideoBoxScene'
 import { useWindowSize } from '~/hooks/useWindowSize'
 
 export default () => {
@@ -15,6 +16,7 @@ export default () => {
     const [position, setPosition] = useState(0)
 
     const scenes = [
+        VideoBoxScene,
         SplitCylinderScene,
         CanvasTextureScene,
         ImageTextureScene,

@@ -19,9 +19,41 @@ type MaterialProps = {
     side: Side
 }
 
-const Material = ({ texture, side }: MaterialProps) => (
-    <meshBasicMaterial attach="material" map={texture} color={'white'} side={side} transparent />
-)
+// export interface ShaderMaterialParameters extends MaterialParameters {
+// 	uniforms?: any;
+// 	vertexShader?: string;
+// 	fragmentShader?: string;
+// 	linewidth?: number;
+// 	wireframe?: boolean;
+// 	wireframeLinewidth?: number;
+// 	lights?: boolean;
+// 	clipping?: boolean;
+// 	skinning?: boolean;
+// 	morphTargets?: boolean;
+// 	morphNormals?: boolean;
+// 	extensions?: {
+// 		derivatives?: boolean;
+// 		fragDepth?: boolean;
+// 		drawBuffers?: boolean;
+// 		shaderTextureLOD?: boolean;
+// 	};
+// }
+
+const Material = ({ texture, side }: MaterialProps) => {
+    const uniforms = {
+        tOne: { type: 't', value: texture },
+    }
+
+    return (
+        <shaderMaterial
+            attach="material"
+            uniforms={uniforms}
+            color={'white'}
+            side={side}
+            transparent
+        />
+    )
+}
 
 type ImageTextureProps = {
     isHover: boolean
